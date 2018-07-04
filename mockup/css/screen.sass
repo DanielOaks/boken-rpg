@@ -1,0 +1,125 @@
+@import mixins/reset
+@import mixins/font-opensans
+
+$standard-font-stack: "Open Sans", sans-serif
+$mono-font-stack: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace
+
+html, body
+    height: 100%
+    background: #77a
+    font-family: $standard-font-stack
+
+.three-pane
+    height: 100%
+    width: 100%
+    display: flex
+
+    .left-pane
+        > .main-info
+            border-radius: 0 0 0.5em 0
+        > .buttons
+            padding: 0 0 0.5em 0.5em
+    .right-pane
+        > .main-info
+            border-radius: 0 0 0 0.5em
+        > .buttons
+            padding: 0 0.5em 0.5em 0
+
+    .left-pane, .right-pane
+        width: 13.5em
+        flex: 0 0 auto
+        display: flex
+        flex-direction: column
+
+        > .main-info
+            flex: 1 1 auto
+            padding: 0.5em
+            background: #525280
+            // border-radius: 0 0 0.5em 0.5em
+        > .buttons
+            flex: 0 0 auto
+            // padding: 0 0.5em 0.5em 0.5em
+            display: flex
+            justify-content: space-between
+            flex-wrap: wrap
+
+            .nbutton
+                display: block
+                padding: 0.5em 0
+                width: calc(50% - 0.25em)
+                background: #525280
+                margin-top: 0.5em
+                border-radius: 0.5em
+                color: #fff
+                text-align: center
+                text-decoration: none
+                opacity: 0.4
+                cursor: default
+                &.active
+                    opacity: 1
+                    cursor: pointer
+    
+    .center-pane
+        display: flex
+        flex-direction: column
+        width: 100%
+        flex: 1 1 auto
+        padding: 0 0.5em
+
+        > .content
+            flex: 1 1 auto
+            padding: 1em 0
+        
+        > .buttons
+            flex: 0 0 auto
+            padding: 0.5em 0
+            display: flex
+            justify-content: space-between
+            flex-wrap: wrap
+
+            .kbutton
+                display: flex
+                box-sizing: border-box
+                padding: 0.5em
+                width: calc(20% - 0.4em)
+                background: #525280
+                margin-top: 0.5em
+                border-radius: 0.5em
+                color: #fff
+                text-align: center
+                text-decoration: none
+                opacity: 0.4
+                flex-direction: row-reverse
+                cursor: default
+                &.wasd
+                    background: #a25b32
+                &.active
+                    opacity: 1
+                    cursor: pointer
+                
+                .word
+                    flex: 1 1 auto
+                    width: 100%
+                    overflow-x: hidden
+                    white-space: nowrap
+
+                .key
+                    width: 0
+                    flex: 0 0 auto
+                    position: absolute
+                    > div
+                        box-sizing: border-box
+                        display: block
+                        text-align: center
+                        height: 1.5em
+                        width: 1.5em
+                        padding-top: 0.185em
+                        float: right
+                        bottom: -1.2em
+                        right: -1.2em
+                        position: relative
+                        font-size: 0.65em
+                        color: #373761
+                        border-radius: 1em
+                        background: #77a
+                        border: 1px solid #525280
