@@ -158,7 +158,13 @@ html, body
 
         > .content
             flex: 1 1 auto
-            padding: 1em 0
+            padding: 1em 0.7em
+            overflow-y: auto
+            line-height: 1.15
+
+            color: rgba(255,255,255,0.85)
+            p + p
+                margin-top: 1em
         
         > .buttons
             flex: 0 0 auto
@@ -183,7 +189,10 @@ html, body
                 flex-direction: row-reverse
                 cursor: default
                 &.wasd
-                    background: #a25b32
+                    background: #a23247
+                    .key > div
+                        color: #a23247
+                        border-color: #a23247
                 &.active
                     opacity: 1
                     cursor: pointer
@@ -199,6 +208,7 @@ html, body
                     flex: 0 0 auto
                     position: absolute
                     > div
+                        text-transform: uppercase
                         box-sizing: border-box
                         display: block
                         text-align: center
