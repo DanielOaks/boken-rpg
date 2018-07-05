@@ -2783,11 +2783,67 @@ html, body {
 .three-pane .left-pane > .main-info {
   border-radius: 0 0 0.5em 0;
 }
+.three-pane .left-pane > .main-info .place, .three-pane .left-pane > .main-info .region-name {
+  padding: 0.5em;
+  background: rgba(20, 20, 20, 0.2);
+  border-radius: 0.4em;
+}
+.three-pane .left-pane > .main-info .place .description, .three-pane .left-pane > .main-info .region-name .description {
+  font-size: 1.5em;
+}
+.three-pane .left-pane > .main-info .place {
+  min-height: 6em;
+  margin-bottom: 0.2em;
+}
+.three-pane .left-pane > .main-info .region-name {
+  margin-bottom: 0.5em;
+}
 .three-pane .left-pane > .buttons {
   padding: 0 0 0.5em 0.5em;
 }
 .three-pane .right-pane > .main-info {
   border-radius: 0 0 0 0.5em;
+  overflow-y: auto;
+}
+.three-pane .right-pane > .main-info .basics, .three-pane .right-pane > .main-info .attributes, .three-pane .right-pane > .main-info .status {
+  margin-bottom: 1em;
+}
+.three-pane .right-pane > .main-info .basics h2, .three-pane .right-pane > .main-info .attributes h2, .three-pane .right-pane > .main-info .status h2 {
+  font-weight: 600;
+}
+.three-pane .right-pane > .main-info .basics hr, .three-pane .right-pane > .main-info .attributes hr, .three-pane .right-pane > .main-info .status hr {
+  height: 0.2em;
+  background: #77a;
+  border: none;
+  border-radius: 0.5em;
+}
+.three-pane .right-pane > .main-info .basics .val + .bar, .three-pane .right-pane > .main-info .basics .val + .val, .three-pane .right-pane > .main-info .basics .bar + .bar, .three-pane .right-pane > .main-info .basics .bar + .val, .three-pane .right-pane > .main-info .attributes .val + .bar, .three-pane .right-pane > .main-info .attributes .val + .val, .three-pane .right-pane > .main-info .attributes .bar + .bar, .three-pane .right-pane > .main-info .attributes .bar + .val, .three-pane .right-pane > .main-info .status .val + .bar, .three-pane .right-pane > .main-info .status .val + .val, .three-pane .right-pane > .main-info .status .bar + .bar, .three-pane .right-pane > .main-info .status .bar + .val {
+  margin-top: 0.5em;
+}
+.three-pane .right-pane > .main-info .basics .val, .three-pane .right-pane > .main-info .attributes .val, .three-pane .right-pane > .main-info .status .val {
+  padding: 0 0.5em;
+}
+.three-pane .right-pane > .main-info .basics .bar, .three-pane .right-pane > .main-info .attributes .bar, .three-pane .right-pane > .main-info .status .bar {
+  height: 1.5em;
+  box-sizing: border-box;
+  padding: 0 0.5em;
+  border-radius: 0.5em;
+  background-image: linear-gradient(to right, rgba(255, 20, 20, 0.15) 50%, rgba(20, 20, 20, 0.15) 50.05%);
+  background-position-x: 0;
+  background-size: 200%;
+}
+.three-pane .right-pane > .main-info .basics .bar .text, .three-pane .right-pane > .main-info .basics .val .text, .three-pane .right-pane > .main-info .attributes .bar .text, .three-pane .right-pane > .main-info .attributes .val .text, .three-pane .right-pane > .main-info .status .bar .text, .three-pane .right-pane > .main-info .status .val .text {
+  display: flex;
+  font-size: 1.5em;
+  text-transform: uppercase;
+}
+.three-pane .right-pane > .main-info .basics .bar .text .description, .three-pane .right-pane > .main-info .basics .val .text .description, .three-pane .right-pane > .main-info .attributes .bar .text .description, .three-pane .right-pane > .main-info .attributes .val .text .description, .three-pane .right-pane > .main-info .status .bar .text .description, .three-pane .right-pane > .main-info .status .val .text .description {
+  flex: 1 1 auto;
+  white-space: nowrap;
+}
+.three-pane .right-pane > .main-info .basics .bar .text .value, .three-pane .right-pane > .main-info .basics .val .text .value, .three-pane .right-pane > .main-info .attributes .bar .text .value, .three-pane .right-pane > .main-info .attributes .val .text .value, .three-pane .right-pane > .main-info .status .bar .text .value, .three-pane .right-pane > .main-info .status .val .text .value {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 .three-pane .right-pane > .buttons {
   padding: 0 0.5em 0.5em 0;
@@ -2799,6 +2855,7 @@ html, body {
   flex-direction: column;
 }
 .three-pane .left-pane > .main-info, .three-pane .right-pane > .main-info {
+  color: #fff;
   flex: 1 1 auto;
   padding: 0.5em;
   background: #525280;
@@ -2810,6 +2867,13 @@ html, body {
 }
 .three-pane .left-pane > .main-info > .region-map, .three-pane .right-pane > .main-info > .region-map {
   flex: 1 1 auto;
+  margin-bottom: 0.5em;
+  background: #77a;
+  border-radius: 0.4em;
+  text-align: center;
+}
+.three-pane .left-pane > .main-info > .time, .three-pane .right-pane > .main-info > .time {
+  margin-bottom: 0.5em;
 }
 .three-pane .left-pane > .main-info > .buttons, .three-pane .right-pane > .main-info > .buttons {
   display: grid;

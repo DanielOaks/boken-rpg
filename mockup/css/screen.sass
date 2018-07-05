@@ -19,11 +19,65 @@ html, body
     .left-pane
         > .main-info
             border-radius: 0 0 0.5em 0
+            .place, .region-name
+                padding: 0.5em
+                background: rgba(20,20,20,0.2)
+                border-radius: 0.4em
+                .description
+                    font-size: 1.5em
+            .place
+                min-height: 6em
+                margin-bottom: 0.2em
+            .region-name
+                margin-bottom: 0.5em
+
         > .buttons
             padding: 0 0 0.5em 0.5em
     .right-pane
         > .main-info
             border-radius: 0 0 0 0.5em
+            overflow-y: auto
+
+            .basics, .attributes, .status
+                margin-bottom: 1em
+
+                h2
+                    font-weight: 600
+
+                hr
+                    height: 0.2em
+                    background: #77a
+                    border: none
+                    border-radius: 0.5em
+
+                .val, .bar
+                    + .bar, + .val
+                        margin-top: 0.5em
+                
+                .val
+                    padding: 0 0.5em
+                .bar
+                    height: 1.5em
+                    box-sizing: border-box
+                    padding: 0 0.5em
+                    border-radius: 0.5em
+                    background-image: linear-gradient(to right, rgba(2220,20,20,0.15) 50%, rgba(20,20,20,0.15) 50.05%)
+                    background-position-x: 0
+                    background-size: 200%
+
+                .bar, .val
+                    .text
+                        display: flex
+                        font-size: 1.5em
+                        text-transform: uppercase
+                        
+                        .description
+                            flex: 1 1 auto
+                            white-space: nowrap
+                        .value
+                            flex: 0 0 auto
+                            white-space: nowrap
+
         > .buttons
             padding: 0 0.5em 0.5em 0
 
@@ -34,6 +88,7 @@ html, body
         flex-direction: column
 
         > .main-info
+            color: #fff
             flex: 1 1 auto
             padding: 0.5em
             background: #525280
@@ -43,6 +98,12 @@ html, body
                 flex: 0 0 auto
             > .region-map
                 flex: 1 1 auto
+                margin-bottom: 0.5em
+                background: #77a
+                border-radius: 0.4em
+                text-align: center
+            > .time
+                margin-bottom: 0.5em
             > .buttons
                 display: grid
                 grid-template-columns: repeat(5, 1fr)
