@@ -2805,25 +2805,25 @@ html, body {
   border-radius: 0 0 0 0.5em;
   overflow-y: auto;
 }
-.three-pane .right-pane > .main-info .basics, .three-pane .right-pane > .main-info .attributes, .three-pane .right-pane > .main-info .status {
+.three-pane .right-pane > .main-info .basics, .three-pane .right-pane > .main-info .attributes, .three-pane .right-pane > .main-info .status, .three-pane .right-pane > .main-info .advancement {
   margin-bottom: 1em;
 }
-.three-pane .right-pane > .main-info .basics h2, .three-pane .right-pane > .main-info .attributes h2, .three-pane .right-pane > .main-info .status h2 {
+.three-pane .right-pane > .main-info .basics h2, .three-pane .right-pane > .main-info .attributes h2, .three-pane .right-pane > .main-info .status h2, .three-pane .right-pane > .main-info .advancement h2 {
   font-weight: 600;
 }
-.three-pane .right-pane > .main-info .basics hr, .three-pane .right-pane > .main-info .attributes hr, .three-pane .right-pane > .main-info .status hr {
+.three-pane .right-pane > .main-info .basics hr, .three-pane .right-pane > .main-info .attributes hr, .three-pane .right-pane > .main-info .status hr, .three-pane .right-pane > .main-info .advancement hr {
   height: 0.2em;
   background: #77a;
   border: none;
   border-radius: 0.5em;
 }
-.three-pane .right-pane > .main-info .basics .val + .bar, .three-pane .right-pane > .main-info .basics .val + .val, .three-pane .right-pane > .main-info .basics .bar + .bar, .three-pane .right-pane > .main-info .basics .bar + .val, .three-pane .right-pane > .main-info .attributes .val + .bar, .three-pane .right-pane > .main-info .attributes .val + .val, .three-pane .right-pane > .main-info .attributes .bar + .bar, .three-pane .right-pane > .main-info .attributes .bar + .val, .three-pane .right-pane > .main-info .status .val + .bar, .three-pane .right-pane > .main-info .status .val + .val, .three-pane .right-pane > .main-info .status .bar + .bar, .three-pane .right-pane > .main-info .status .bar + .val {
+.three-pane .right-pane > .main-info .basics .val + .bar, .three-pane .right-pane > .main-info .basics .val + .val, .three-pane .right-pane > .main-info .basics .bar + .bar, .three-pane .right-pane > .main-info .basics .bar + .val, .three-pane .right-pane > .main-info .attributes .val + .bar, .three-pane .right-pane > .main-info .attributes .val + .val, .three-pane .right-pane > .main-info .attributes .bar + .bar, .three-pane .right-pane > .main-info .attributes .bar + .val, .three-pane .right-pane > .main-info .status .val + .bar, .three-pane .right-pane > .main-info .status .val + .val, .three-pane .right-pane > .main-info .status .bar + .bar, .three-pane .right-pane > .main-info .status .bar + .val, .three-pane .right-pane > .main-info .advancement .val + .bar, .three-pane .right-pane > .main-info .advancement .val + .val, .three-pane .right-pane > .main-info .advancement .bar + .bar, .three-pane .right-pane > .main-info .advancement .bar + .val {
   margin-top: 0.5em;
 }
-.three-pane .right-pane > .main-info .basics .val, .three-pane .right-pane > .main-info .attributes .val, .three-pane .right-pane > .main-info .status .val {
+.three-pane .right-pane > .main-info .basics .val, .three-pane .right-pane > .main-info .attributes .val, .three-pane .right-pane > .main-info .status .val, .three-pane .right-pane > .main-info .advancement .val {
   padding: 0 0.5em;
 }
-.three-pane .right-pane > .main-info .basics .bar, .three-pane .right-pane > .main-info .attributes .bar, .three-pane .right-pane > .main-info .status .bar {
+.three-pane .right-pane > .main-info .basics .bar, .three-pane .right-pane > .main-info .attributes .bar, .three-pane .right-pane > .main-info .status .bar, .three-pane .right-pane > .main-info .advancement .bar {
   height: 1.5em;
   box-sizing: border-box;
   padding: 0 0.5em;
@@ -2832,16 +2832,16 @@ html, body {
   background-position-x: 0;
   background-size: 200%;
 }
-.three-pane .right-pane > .main-info .basics .bar .text, .three-pane .right-pane > .main-info .basics .val .text, .three-pane .right-pane > .main-info .attributes .bar .text, .three-pane .right-pane > .main-info .attributes .val .text, .three-pane .right-pane > .main-info .status .bar .text, .three-pane .right-pane > .main-info .status .val .text {
+.three-pane .right-pane > .main-info .basics .bar .text, .three-pane .right-pane > .main-info .basics .val .text, .three-pane .right-pane > .main-info .attributes .bar .text, .three-pane .right-pane > .main-info .attributes .val .text, .three-pane .right-pane > .main-info .status .bar .text, .three-pane .right-pane > .main-info .status .val .text, .three-pane .right-pane > .main-info .advancement .bar .text, .three-pane .right-pane > .main-info .advancement .val .text {
   display: flex;
   font-size: 1.5em;
   text-transform: uppercase;
 }
-.three-pane .right-pane > .main-info .basics .bar .text .description, .three-pane .right-pane > .main-info .basics .val .text .description, .three-pane .right-pane > .main-info .attributes .bar .text .description, .three-pane .right-pane > .main-info .attributes .val .text .description, .three-pane .right-pane > .main-info .status .bar .text .description, .three-pane .right-pane > .main-info .status .val .text .description {
+.three-pane .right-pane > .main-info .basics .bar .text .description, .three-pane .right-pane > .main-info .basics .val .text .description, .three-pane .right-pane > .main-info .attributes .bar .text .description, .three-pane .right-pane > .main-info .attributes .val .text .description, .three-pane .right-pane > .main-info .status .bar .text .description, .three-pane .right-pane > .main-info .status .val .text .description, .three-pane .right-pane > .main-info .advancement .bar .text .description, .three-pane .right-pane > .main-info .advancement .val .text .description {
   flex: 1 1 auto;
   white-space: nowrap;
 }
-.three-pane .right-pane > .main-info .basics .bar .text .value, .three-pane .right-pane > .main-info .basics .val .text .value, .three-pane .right-pane > .main-info .attributes .bar .text .value, .three-pane .right-pane > .main-info .attributes .val .text .value, .three-pane .right-pane > .main-info .status .bar .text .value, .three-pane .right-pane > .main-info .status .val .text .value {
+.three-pane .right-pane > .main-info .basics .bar .text .value, .three-pane .right-pane > .main-info .basics .val .text .value, .three-pane .right-pane > .main-info .attributes .bar .text .value, .three-pane .right-pane > .main-info .attributes .val .text .value, .three-pane .right-pane > .main-info .status .bar .text .value, .three-pane .right-pane > .main-info .status .val .text .value, .three-pane .right-pane > .main-info .advancement .bar .text .value, .three-pane .right-pane > .main-info .advancement .val .text .value {
   flex: 0 0 auto;
   white-space: nowrap;
 }
