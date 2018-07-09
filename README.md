@@ -1,6 +1,8 @@
 # Web RPG Engine
 This is a text-based RPG engine, written by Daniel Oaks.
 
+The intention for this is to deliver the whole thing to the client and allow it to be fully run and executed on that side. Not sure how well that'll go, but I'll do my best to get it working like that. As much as possible, also allow games to basically plug-in and use various standard components, so you can use the same 'engine' for multiple RPGs.
+
 
 ## Credits
 
