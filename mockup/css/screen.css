@@ -2774,6 +2774,20 @@ html, body {
   font-family: "Open Sans", sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(20, 20, 40, 0.2);
+  border-radius: 0.1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(20, 20, 40, 0.2);
+  border-radius: 0.3rem;
+}
+
 .three-pane {
   height: 100%;
   width: 100%;
@@ -2976,7 +2990,7 @@ html, body {
 .three-pane .center-pane > .buttons .kbutton .word {
   flex: 1 1 auto;
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
   white-space: nowrap;
 }
 .three-pane .center-pane > .buttons .kbutton .key {
