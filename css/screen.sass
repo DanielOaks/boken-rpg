@@ -48,8 +48,27 @@ html, body
             border-radius: 0 0 0 0.5em
             overflow-y: auto
 
-            .basics, .attributes, .status, .advancement
+        > .buttons
+            padding: 0 0.5em 0.5em 0
+
+    .left-pane, .right-pane
+        width: 13.5em
+        flex: 0 0 auto
+        display: flex
+        flex-direction: column
+
+        > .main-info
+            color: #fff
+            flex: 1 1 auto
+            padding: 0.5em
+            background: #525280
+            display: flex
+            flex-direction: column
+
+            .basics, .attributes, .status, .advancement, .timeholder
                 margin-bottom: 1em
+                &.timeholder
+                    margin-bottom: 0.5em
 
                 h2
                     font-weight: 600
@@ -61,15 +80,15 @@ html, body
                     border-radius: 0.5em
 
                 .val, .bar
+                    padding: 0 0.5em
+                    &.nopad
+                        padding: 0
                     + .bar, + .val
                         margin-top: 0.5em
-                
-                .val
-                    padding: 0 0.5em
+
                 .bar
                     height: 1.5em
                     box-sizing: border-box
-                    padding: 0 0.5em
                     border-radius: 0.5em
                     background-image: linear-gradient(to right, rgba(2220,20,20,0.15) 50%, rgba(20,20,20,0.15) 50.05%)
                     background-position-x: 0
@@ -88,22 +107,6 @@ html, body
                             flex: 0 0 auto
                             white-space: nowrap
 
-        > .buttons
-            padding: 0 0.5em 0.5em 0
-
-    .left-pane, .right-pane
-        width: 13.5em
-        flex: 0 0 auto
-        display: flex
-        flex-direction: column
-
-        > .main-info
-            color: #fff
-            flex: 1 1 auto
-            padding: 0.5em
-            background: #525280
-            display: flex
-            flex-direction: column
             > div
                 flex: 0 0 auto
             > .region-map
