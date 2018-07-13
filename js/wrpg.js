@@ -25,13 +25,54 @@ function GuiManager() {
     return g
 }
 
+function ButtonManager() {
+    var b = {
+        keyPresses: {},
+
+        init() {
+            // press buttons
+            var pressButtons = document.querySelectorAll('[data-btn]')
+            for (var i = 0, len = pressButtons.length; i < len; i++) {
+                pressButtons[i].addEventListener('click', this.pressHandler)
+            }
+
+            // keyboard presses
+            var keyButtons = document.querySelectorAll('[data-btn][data-keypress]')
+            for (var i = 0, len = keyButtons.length; i < len; i++) {
+                this.keyPresses[keyButtons[i].dataset.keypress] = keyButtons[i].dataset.btn
+            }
+
+            // add event listener for keyboard presses
+            document.addEventListener('keypress', (event) => {
+                event.preventDefault()
+
+                var btn = this.keyPresses[event.key]
+                if (btn != null) {
+                    console.log('got a keyboard press', btn)
+                }
+            })
+        },
+
+        pressHandler(event) {
+            event.preventDefault()
+            console.log('got a button press', event.currentTarget.dataset.btn)
+        },
+    }
+
+    return b
+}
+
 function Engine() {
     var e = {
+        state: 'start',
+
+        Buttons: ButtonManager(),
         Gui: GuiManager(),
 
         init() {
+            this.Buttons.init()
             this.Gui.init()
-        }
+        },
     }
     return e
 }
