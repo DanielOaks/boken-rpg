@@ -1,6 +1,7 @@
 function GuiManager() {
     var g = {
         currentButtons: {},
+        contentHistory: [],
 
         init() {
             this.rBars = document.querySelectorAll('#main .right-pane .main-info .bar')
@@ -27,6 +28,14 @@ function GuiManager() {
             for (var i = 0, len = this.rBarValues.length; i < len; i++) {
                 this.rBarValues[i].innerText = '0'
             }
+            this.wipeButtons()
+        },
+
+        wipeContent() {
+            this.contentHistory = []
+            this.rContent.innerHTML = '&nbsp'
+        },
+        wipeButtons() {
             for (var i = 0, len = this.rControlButtons.length; i < len; i++) {
                 this.rControlButtons[i].classList.remove('active')
                 this.rControlButtons[i].children[0].innerHTML = '&nbsp;'
@@ -177,11 +186,11 @@ function Datastore() {
         _data: {},
 
         set(key, value) {
-            _data[key] = value
+            this._data[key] = value
         },
 
         get(key, defaultValue) {
-            var value = _data[key]
+            var value = this._data[key]
             if (value === null) {
                 return defaultValue
             }
@@ -189,7 +198,7 @@ function Datastore() {
         },
 
         has(key) {
-            var value = _data[key]
+            var value = this._data[key]
             return value === null
         },
 
@@ -197,6 +206,8 @@ function Datastore() {
             this._data.delete(key)
         },
     }
+
+    return d
 }
 
 function Engine() {
@@ -206,6 +217,7 @@ function Engine() {
         state: 'start',
 
         Buttons: ButtonManager(eq),
+        Data: Datastore(),
         Events: eq,
         Gui: GuiManager(),
 
@@ -233,4 +245,25 @@ Zepto(function ($) {
 
     engine.Gui.addButton('1', 'New Game', 'Start a new game', 'Start playing!')
     engine.Gui.addButton('2', 'Load', 'Load an existing game', 'Start playing!')
+
+    // new game handler
+    engine.Events.addHandler('btn 1', (event) => {
+        if (engine.state !== 'start') {
+            return
+        }
+
+        engine.Data = Datastore()
+        engine.state = 'intro'
+
+        engine.Gui.wipeContent()
+        engine.Gui.wipeButtons()
+
+        engine.Gui.rContent.innerHTML = `
+            <p>Welcome to the game!</p>
+            <p>Here's a thing, lol.</p>
+            <p>Ayyyyy.</p>
+            <p>Yeah yo.</p>`
+
+        engine.Data.set('intro-page', 0)
+    })
 })
