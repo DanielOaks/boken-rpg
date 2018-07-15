@@ -1374,6 +1374,8 @@ html, body { height: 100%; background: #77a; font-family: "Open Sans", sans-seri
 .three-pane .center-pane { display: flex; flex-direction: column; width: 100%; flex: 1 1 auto; padding: 0 0.5em; }
 .three-pane .center-pane > .content { flex: 1 1 auto; padding: 1em 0.7em; overflow-y: auto; line-height: 1.15; color: rgba(255, 255, 255, 0.85); }
 .three-pane .center-pane > .content p + p { margin-top: 1em; }
+.three-pane .center-pane > .content input[type="text"] { font-size: 0.98em; background: #52527f; color: #fff; border-radius: 0.3em; border: 1px solid #4c4c6f; padding: 0.05em 0.2em 0.1em; }
+.three-pane .center-pane > .content input[type="text"]::placeholder { color: #ddd; }
 .three-pane .center-pane > .buttons { flex: 0 0 auto; padding: 0.5em 0; display: flex; justify-content: space-between; flex-wrap: wrap; }
 .three-pane .center-pane > .buttons .kbutton { display: flex; box-sizing: border-box; padding: 0.5em; width: calc(20% - 0.4em); font-size: 1.2em; background: #525280; margin-top: 0.5em; border-radius: 0.5em; color: #fff; text-align: center; text-decoration: none; opacity: 0.4; flex-direction: row-reverse; cursor: default; }
 .three-pane .center-pane > .buttons .kbutton.wasd { background: #a23247; }

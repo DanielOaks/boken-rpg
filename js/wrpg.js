@@ -70,6 +70,11 @@ function ButtonManager(eventQueue) {
 
             // add event listener for keyboard presses
             document.addEventListener('keypress', (event) => {
+                // let it work fine when they're typing into an input field
+                if (event.target.tagName == 'INPUT') {
+                    return
+                }
+
                 event.preventDefault()
 
                 var btn = this.keyPresses[event.key]
@@ -150,7 +155,7 @@ function EventQueue() {
         },
 
         dispatch(name) {
-            console.log('dispatching event', name)
+            console.log('dispatching event "' + name + '" -', this.handlers[name] === undefined ? 0 : this.handlers[name].length, 'handler(s)')
             this.pendingEvents.push(name)
 
             if (!this.workingOnEvents) {
@@ -169,7 +174,11 @@ function EventQueue() {
 
                     for (var i = 0, len = handlers.length; i < len; i++) {
                         // console.log('calling handler', handlers[i], 'with event', newEvent)
-                        handlers[i](newEvent)
+                        var returnVal = handlers[i](newEvent)
+
+                        if (returnVal === true) {
+                            break
+                        }
                     }
                 }
 
@@ -249,7 +258,7 @@ Zepto(function ($) {
     // new game handler
     engine.Events.addHandler('btn 1', (event) => {
         if (engine.state !== 'start') {
-            return
+            return false
         }
 
         engine.Data = Datastore()
@@ -262,8 +271,31 @@ Zepto(function ($) {
             <p>Welcome to the game!</p>
             <p>Here's a thing, lol.</p>
             <p>Ayyyyy.</p>
-            <p>Yeah yo.</p>`
+            <p>Yeah yo.</p>
+            <p>They call you: <input class="name" type="text" value="Name" placeholder="Name"></p>`
 
         engine.Data.set('intro-page', 0)
+
+        engine.Gui.addButton('1', 'Confirm', 'Confirm', "It's what they call me!")
+
+        return true
     })
+
+    function introHandler(event) {
+        if (engine.state !== 'intro') {
+            return false
+        }
+
+        engine.Gui.wipeContent()
+        engine.Gui.wipeButtons()
+
+        var introPage = engine.Data.get('intro-page', 0)
+
+        engine.Gui.rContent.innerHTML = `
+            <p>Well, nice to meet you!</p>`
+
+        return true
+    }
+
+    engine.Events.addHandler('btn 1', introHandler)
 })
