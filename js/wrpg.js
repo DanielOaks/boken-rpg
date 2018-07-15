@@ -1,5 +1,7 @@
 function GuiManager() {
     var g = {
+        currentButtons: {},
+
         init() {
             this.rBars = document.querySelectorAll('#main .right-pane .main-info .bar')
             this.rBarValues = document.querySelectorAll('#main .right-pane .main-info .bar .value')
@@ -29,6 +31,19 @@ function GuiManager() {
                 this.rControlButtons[i].classList.remove('active')
                 this.rControlButtons[i].children[0].innerHTML = '&nbsp;'
             }
+            this.currentButtons = {}
+        },
+
+        addButton(btn, shortName, title, description) {
+            this.currentButtons[btn] = {
+                'shortName': shortName,
+                'title': title,
+                'description': description,
+            }
+
+            var button = document.querySelector('#main .center-pane > .buttons .kbutton[data-btn="' + btn + '"]')
+            button.classList.add('active')
+            button.querySelector('.word').innerText = shortName
         },
     }
 
@@ -42,17 +57,7 @@ function ButtonManager(eventQueue) {
         keyPresses: {},
 
         init() {
-            // press buttons
-            var pressButtons = document.querySelectorAll('[data-btn]')
-            for (var i = 0, len = pressButtons.length; i < len; i++) {
-                pressButtons[i].addEventListener('click', this.pressHandler)
-            }
-
-            // keyboard presses
-            var keyButtons = document.querySelectorAll('[data-btn][data-keypress]')
-            for (var i = 0, len = keyButtons.length; i < len; i++) {
-                this.keyPresses[keyButtons[i].dataset.keypress] = keyButtons[i].dataset.btn
-            }
+            this._init_buttons('')
 
             // add event listener for keyboard presses
             document.addEventListener('keypress', (event) => {
@@ -66,10 +71,26 @@ function ButtonManager(eventQueue) {
             })
         },
 
-        pressHandler(event) {
-            event.preventDefault()
-            // console.log('got a button press', event.currentTarget.dataset.btn)
-            this.eventQueue.dispatch('btn ' + event.currentTarget.dataset.btn)
+        init_content() {
+            this._init_buttons('#main .center-pane .content ')
+        },
+
+        _init_buttons(prefix) {
+            // press buttons
+            var pressButtons = document.querySelectorAll(prefix + '[data-btn]')
+            for (var i = 0, len = pressButtons.length; i < len; i++) {
+                pressButtons[i].addEventListener('click', (event) => {
+                    event.preventDefault()
+                    // console.log('got a button press', event.currentTarget.dataset.btn)
+                    this.eventQueue.dispatch('btn ' + event.currentTarget.dataset.btn)
+                })
+            }
+
+            // keyboard presses
+            var keyButtons = document.querySelectorAll(prefix + '[data-btn][data-keypress]')
+            for (var i = 0, len = keyButtons.length; i < len; i++) {
+                this.keyPresses[keyButtons[i].dataset.keypress] = keyButtons[i].dataset.btn
+            }
         },
     }
 
@@ -77,7 +98,8 @@ function ButtonManager(eventQueue) {
 }
 
 // EventQueue turns a series of async incoming events into a sync stream of handler calls.
-// only works if all handlers are sync (don't return promises or w/e)
+// only works if all handlers are sync (don't return promises or w/e).
+// this is what allows the rest of the code to basically assume and run synchronously
 function EventQueue() {
     var e = {
         workingOnHandlers: false, // manually-controlled mutex
@@ -105,7 +127,7 @@ function EventQueue() {
 
                     var currentHandlers = this.handlers[name]
 
-                    if (currentHandlers == null) {
+                    if (currentHandlers === undefined) {
                         currentHandlers = []
                     }
 
@@ -119,7 +141,7 @@ function EventQueue() {
         },
 
         dispatch(name) {
-            // console.log('dispatching event', name)
+            console.log('dispatching event', name)
             this.pendingEvents.push(name)
 
             if (!this.workingOnEvents) {
@@ -132,7 +154,7 @@ function EventQueue() {
                     }
 
                     var handlers = this.handlers[newEvent]
-                    if (handlers == null) {
+                    if (handlers === undefined) {
                         continue
                     }
 
@@ -148,6 +170,33 @@ function EventQueue() {
     }
 
     return e
+}
+
+function Datastore() {
+    var d = {
+        _data: {},
+
+        set(key, value) {
+            _data[key] = value
+        },
+
+        get(key, defaultValue) {
+            var value = _data[key]
+            if (value === null) {
+                return defaultValue
+            }
+            return value
+        },
+
+        has(key) {
+            var value = _data[key]
+            return value === null
+        },
+
+        delete(key) {
+            this._data.delete(key)
+        },
+    }
 }
 
 function Engine() {
@@ -174,4 +223,14 @@ var engine = Engine()
 Zepto(function ($) {
     engine.init()
     engine.Gui.blankScreen()
+
+    // set initial content
+    var content = document.querySelector('#main .center-pane .content')
+    content.innerHTML = `
+<h1 class="game-title">WRPG</h1>
+
+<p>Welcome to WRPG! This RPG is a cool thing which you can play.</p>`
+
+    engine.Gui.addButton('1', 'New Game', 'Start a new game', 'Start playing!')
+    engine.Gui.addButton('2', 'Load', 'Load an existing game', 'Start playing!')
 })
