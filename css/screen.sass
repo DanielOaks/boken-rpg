@@ -20,6 +20,34 @@ html, body
     background: rgba(20,20,40,0.2)
     border-radius: 0.3rem
 
+#hover-hint
+    position: absolute
+    width: calc(100% - (15.4em * 2))
+    left: 15.4em
+    bottom: 10.5em
+    box-sizing: border-box
+    padding-top: 0.5em
+    color: rgba(255,255,255,0.95)
+    display: flex
+    &.hidden
+        display: none
+    .content
+        flex: 0 1 auto
+        background: rgba(82, 82, 128, 0.75)
+        padding: 0.6em 0.7em
+        border-radius: 0.25em
+    .spacer
+        flex: 1 1 auto
+        pointer-events: none
+
+    h1
+        margin-bottom: 0.8em
+    .title
+        font-size: 1.15em
+        border-bottom: rgba(240,240,240,0.2) solid 0.2em
+        border-radius: 0.1em
+        padding-bottom: 0.05em
+
 .three-pane
     height: 100%
     width: 100%
@@ -181,7 +209,7 @@ html, body
             overflow-y: auto
             line-height: 1.15
 
-            color: rgba(255,255,255,0.85)
+            color: rgba(255,255,255,0.95)
             p + p
                 margin-top: 1em
             input[type="text"]
@@ -192,7 +220,7 @@ html, body
                 border: 1px solid #4c4c6f
                 padding: 0.05em 0.2em 0.1em
                 &::placeholder
-                    color: #ddd
+                    color: #ccd
         
         > .buttons
             flex: 0 0 auto
@@ -204,7 +232,8 @@ html, body
             .kbutton
                 display: flex
                 box-sizing: border-box
-                padding: 0.5em
+                padding: 0 0.5em
+                height: 2em
                 width: calc(20% - 0.4em)
                 font-size: 1.2em
                 background: #525280
@@ -230,6 +259,7 @@ html, body
                     width: 100%
                     overflow: hidden
                     white-space: nowrap
+                    padding-top: 0.45em
 
                 .key
                     width: 0
@@ -244,7 +274,7 @@ html, body
                         width: 1.5em
                         padding-top: 0.185em
                         float: right
-                        bottom: -1.2em
+                        bottom: -2em
                         right: -1.2em
                         position: relative
                         font-size: 0.65em

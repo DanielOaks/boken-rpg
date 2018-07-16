@@ -1339,6 +1339,13 @@ html, body { height: 100%; background: #77a; font-family: "Open Sans", sans-seri
 
 ::-webkit-scrollbar-thumb { background: rgba(20, 20, 40, 0.2); border-radius: 0.3rem; }
 
+#hover-hint { position: absolute; width: calc(100% - (15.4em * 2)); left: 15.4em; bottom: 10.5em; box-sizing: border-box; padding-top: 0.5em; color: rgba(255, 255, 255, 0.95); display: flex; }
+#hover-hint.hidden { display: none; }
+#hover-hint .content { flex: 0 1 auto; background: rgba(82, 82, 128, 0.75); padding: 0.6em 0.7em; border-radius: 0.25em; }
+#hover-hint .spacer { flex: 1 1 auto; pointer-events: none; }
+#hover-hint h1 { margin-bottom: 0.8em; }
+#hover-hint .title { font-size: 1.15em; border-bottom: rgba(240, 240, 240, 0.2) solid 0.2em; border-radius: 0.1em; padding-bottom: 0.05em; }
+
 .three-pane { height: 100%; width: 100%; display: flex; font-size: 1.1em; }
 .three-pane .left-pane > .main-info { border-radius: 0 0 0.5em 0; }
 .three-pane .left-pane > .main-info .place, .three-pane .left-pane > .main-info .region-name { padding: 0.5em; background: rgba(20, 20, 20, 0.2); border-radius: 0.4em; }
@@ -1372,15 +1379,15 @@ html, body { height: 100%; background: #77a; font-family: "Open Sans", sans-seri
 .three-pane .left-pane > .buttons .nbutton, .three-pane .right-pane > .buttons .nbutton { display: block; padding: 0.5em 0; width: calc(50% - 0.25em); background: #525280; margin-top: 0.5em; border-radius: 0.5em; color: #fff; text-align: center; text-decoration: none; opacity: 0.4; cursor: default; }
 .three-pane .left-pane > .buttons .nbutton.active, .three-pane .right-pane > .buttons .nbutton.active { opacity: 1; cursor: pointer; }
 .three-pane .center-pane { display: flex; flex-direction: column; width: 100%; flex: 1 1 auto; padding: 0 0.5em; }
-.three-pane .center-pane > .content { flex: 1 1 auto; padding: 1em 0.7em; overflow-y: auto; line-height: 1.15; color: rgba(255, 255, 255, 0.85); }
+.three-pane .center-pane > .content { flex: 1 1 auto; padding: 1em 0.7em; overflow-y: auto; line-height: 1.15; color: rgba(255, 255, 255, 0.95); }
 .three-pane .center-pane > .content p + p { margin-top: 1em; }
 .three-pane .center-pane > .content input[type="text"] { font-size: 0.98em; background: #52527f; color: #fff; border-radius: 0.3em; border: 1px solid #4c4c6f; padding: 0.05em 0.2em 0.1em; }
-.three-pane .center-pane > .content input[type="text"]::placeholder { color: #ddd; }
+.three-pane .center-pane > .content input[type="text"]::placeholder { color: #ccd; }
 .three-pane .center-pane > .buttons { flex: 0 0 auto; padding: 0.5em 0; display: flex; justify-content: space-between; flex-wrap: wrap; }
-.three-pane .center-pane > .buttons .kbutton { display: flex; box-sizing: border-box; padding: 0.5em; width: calc(20% - 0.4em); font-size: 1.2em; background: #525280; margin-top: 0.5em; border-radius: 0.5em; color: #fff; text-align: center; text-decoration: none; opacity: 0.4; flex-direction: row-reverse; cursor: default; }
+.three-pane .center-pane > .buttons .kbutton { display: flex; box-sizing: border-box; padding: 0 0.5em; height: 2em; width: calc(20% - 0.4em); font-size: 1.2em; background: #525280; margin-top: 0.5em; border-radius: 0.5em; color: #fff; text-align: center; text-decoration: none; opacity: 0.4; flex-direction: row-reverse; cursor: default; }
 .three-pane .center-pane > .buttons .kbutton.wasd { background: #a23247; }
 .three-pane .center-pane > .buttons .kbutton.wasd .key > div { color: #a23247; border-color: #a23247; }
 .three-pane .center-pane > .buttons .kbutton.active { opacity: 1; cursor: pointer; }
-.three-pane .center-pane > .buttons .kbutton .word { flex: 1 1 auto; width: 100%; overflow: hidden; white-space: nowrap; }
+.three-pane .center-pane > .buttons .kbutton .word { flex: 1 1 auto; width: 100%; overflow: hidden; white-space: nowrap; padding-top: 0.45em; }
 .three-pane .center-pane > .buttons .kbutton .key { width: 0; flex: 0 0 auto; position: absolute; }
-.three-pane .center-pane > .buttons .kbutton .key > div { text-transform: uppercase; box-sizing: border-box; display: block; text-align: center; height: 1.5em; width: 1.5em; padding-top: 0.185em; float: right; bottom: -1.2em; right: -1.2em; position: relative; font-size: 0.65em; color: #373761; border-radius: 1em; background: #77a; border: 1px solid #525280; }
+.three-pane .center-pane > .buttons .kbutton .key > div { text-transform: uppercase; box-sizing: border-box; display: block; text-align: center; height: 1.5em; width: 1.5em; padding-top: 0.185em; float: right; bottom: -2em; right: -1.2em; position: relative; font-size: 0.65em; color: #373761; border-radius: 1em; background: #77a; border: 1px solid #525280; }

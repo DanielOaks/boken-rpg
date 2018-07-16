@@ -39,6 +39,8 @@ function GuiManager() {
             for (var i = 0, len = this.rControlButtons.length; i < len; i++) {
                 this.rControlButtons[i].classList.remove('active')
                 this.rControlButtons[i].children[0].innerHTML = '&nbsp;'
+                delete this.rControlButtons[i].dataset.title
+                delete this.rControlButtons[i].dataset.description
             }
             this.currentButtons = {}
         },
@@ -53,6 +55,8 @@ function GuiManager() {
             var button = document.querySelector('#main .center-pane > .buttons .kbutton[data-btn="' + btn + '"]')
             button.classList.add('active')
             button.querySelector('.word').innerText = shortName
+            button.dataset.title = title
+            button.dataset.description = description
         },
     }
 
@@ -245,6 +249,30 @@ Zepto(function ($) {
     engine.init()
     engine.Gui.blankScreen()
 
+    // add hover handler
+    hoverButtons = document.querySelectorAll('.canhover')
+    var hoverHint = document.querySelector('#hover-hint')
+    hoverHint.classList.add('hidden')
+    var hoverHintTitle = document.querySelector('#hover-hint .title')
+    var hoverHintDescription = document.querySelector('#hover-hint .description')
+    for (var i = 0, len = hoverButtons.length; i < len; i++) {
+        hoverButtons[i].addEventListener('mouseenter', (event) => {
+            // console.log('hovering over button', event.currentTarget, event.currentTarget.dataset.title)
+            var title = event.currentTarget.dataset.title
+            var description = event.currentTarget.dataset.description
+            if ((title === undefined) || (description === undefined)) {
+                return
+            }
+            hoverHintTitle.innerText = title
+            hoverHintDescription.innerText = description
+            hoverHint.classList.remove('hidden')
+        })
+        hoverButtons[i].addEventListener('mouseleave', (event) => {
+            // console.log('  no longer hovering over button', event.currentTarget)
+            hoverHint.classList.add('hidden')
+        })
+    }
+
     // set initial content
     var content = document.querySelector('#main .center-pane .content')
     content.innerHTML = `
@@ -317,7 +345,11 @@ Zepto(function ($) {
         // set content for this page
         if (currentIntroPage == 0) {
             engine.Gui.rContent.innerHTML = `
-                <p>Well, nice to meet you!</p>`
+                <p>Well, nice to meet you! And what race are you?</p>`
+            engine.Gui.addButton('1', 'Human', 'Human', 'Pointy sticks and weird faces')
+            engine.Gui.addButton('2', 'Unicorn', 'Unicorn', 'Magical druids')
+            engine.Gui.addButton('3', 'Half-Wyvern', 'Half-Wyvern', 'Almost a dragon, but not quite')
+            engine.Gui.addButton('4', 'Griffon', 'Griffon', 'Flappy Beak')
         } else {
             engine.Gui.rContent.innerText = 'Here goes intro page ' + currentIntroPage + ' content, but we have none yet!'
         }
@@ -327,4 +359,6 @@ Zepto(function ($) {
 
     engine.Events.addHandler('btn 1', introHandler)
     engine.Events.addHandler('btn 2', introHandler)
+    engine.Events.addHandler('btn 3', introHandler)
+    engine.Events.addHandler('btn 4', introHandler)
 })
