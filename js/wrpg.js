@@ -6,7 +6,7 @@ function GuiManager() {
         init() {
             this.rBars = document.querySelectorAll('#main .right-pane .main-info .bar')
             this.rBarValues = document.querySelectorAll('#main .right-pane .main-info .bar .value')
-            this.rCharacterName = document.querySelector('#main .right-pane .main-info .character-name')
+            this.rPlayerName = document.querySelector('#main .right-pane .main-info .character-name')
             this.rContent = document.querySelector('#main .center-pane .content')
             this.rControlButtons = document.querySelectorAll('#main .center-pane > .buttons .kbutton')
             this.rDay = document.querySelector('#main .left-pane .timeholder .day .value')
@@ -16,7 +16,7 @@ function GuiManager() {
         },
 
         blankScreen() {
-            this.rCharacterName.innerHTML = '&nbsp;'
+            this.rPlayerName.innerHTML = '&nbsp;'
             this.rContent.innerHTML = '&nbsp;'
             this.rDay.innerText = '0'
             this.rPlaceName.innerText = ''
@@ -200,7 +200,7 @@ function Datastore() {
 
         get(key, defaultValue) {
             var value = this._data[key]
-            if (value === null) {
+            if (value === undefined) {
                 return defaultValue
             }
             return value
@@ -272,7 +272,7 @@ Zepto(function ($) {
             <p>Here's a thing, lol.</p>
             <p>Ayyyyy.</p>
             <p>Yeah yo.</p>
-            <p>They call you: <input class="name" type="text" value="Name" placeholder="Name"></p>`
+            <p>They call you: <input class="name" type="text" placeholder="Name"></p>`
 
         engine.Data.set('intro-page', 0)
 
@@ -286,16 +286,45 @@ Zepto(function ($) {
             return false
         }
 
+        // get page number
+        var currentIntroPage = engine.Data.get('intro.page', 0)
+
+        // exit if corrent button isn't pressed for this page
+        if ((currentIntroPage == 0) && (event != 'btn 1')) {
+            return false
+        }
+
+        // info-grabbing before we wipe everything
+        // can return false here to force more info to be entered
+        if (currentIntroPage == 0) {
+            var name = engine.Gui.rContent.querySelector('.name').value.trim()
+
+            if (name.length == 0) {
+                return false
+            }
+
+            engine.Data.set('player.name', name)
+            engine.Gui.rPlayerName.innerText = name
+        }
+
+        // set new page number
+        engine.Data.set('intro.page', currentIntroPage + 1)
+
+        // wipe content and buttons, to set new ones
         engine.Gui.wipeContent()
         engine.Gui.wipeButtons()
 
-        var introPage = engine.Data.get('intro-page', 0)
-
-        engine.Gui.rContent.innerHTML = `
-            <p>Well, nice to meet you!</p>`
+        // set content for this page
+        if (currentIntroPage == 0) {
+            engine.Gui.rContent.innerHTML = `
+                <p>Well, nice to meet you!</p>`
+        } else {
+            engine.Gui.rContent.innerText = 'Here goes intro page ' + currentIntroPage + ' content, but we have none yet!'
+        }
 
         return true
     }
 
     engine.Events.addHandler('btn 1', introHandler)
+    engine.Events.addHandler('btn 2', introHandler)
 })
