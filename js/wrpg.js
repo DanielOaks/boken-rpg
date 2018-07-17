@@ -252,7 +252,7 @@ Zepto(function ($) {
     engine.Gui.blankScreen()
 
     // add hover handler
-    hoverButtons = document.querySelectorAll('.canhover')
+    var hoverButtons = document.querySelectorAll('.canhover')
     var hoverHint = document.querySelector('#hover-hint')
     hoverHint.classList.add('hidden')
     var hoverHintTitle = document.querySelector('#hover-hint .title')
