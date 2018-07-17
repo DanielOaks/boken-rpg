@@ -1,3 +1,5 @@
+import * as tests from './modules/test.js'
+
 function GuiManager() {
     var g = {
         currentButtons: {},
