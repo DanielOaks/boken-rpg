@@ -320,10 +320,13 @@ Zepto(function ($) {
         // exit if corrent button isn't pressed for this page
         if ((currentIntroPage == 0) && (event != 'btn 1')) {
             return false
+        } else if ((currentIntroPage == 1) && !['btn 1', 'btn 2', 'btn 3', 'btn 4'].includes(event)) {
+            return false
         }
 
         // info-grabbing before we wipe everything
         // can return false here to force more info to be entered
+        var race = ''
         if (currentIntroPage == 0) {
             var name = engine.Gui.rContent.querySelector('.name').value.trim()
 
@@ -333,6 +336,21 @@ Zepto(function ($) {
 
             engine.Data.set('player.name', name)
             engine.Gui.rPlayerName.innerText = name
+        } else if (currentIntroPage == 1) {
+            switch (event) {
+            case 'btn 1':
+                race = 'Human'
+                break
+            case 'btn 2':
+                race = 'Unicorn'
+                break
+            case 'btn 3':
+                race = 'Half-Wyvern'
+                break
+            case 'btn 4':
+                race = 'Griffon'
+                break
+            }
         }
 
         // set new page number
@@ -350,6 +368,9 @@ Zepto(function ($) {
             engine.Gui.addButton('2', 'Unicorn', 'Unicorn', 'Magical druids')
             engine.Gui.addButton('3', 'Half-Wyvern', 'Half-Wyvern', 'Almost a dragon, but not quite')
             engine.Gui.addButton('4', 'Griffon', 'Griffon', 'Flappy Beak')
+        } else if (currentIntroPage == 1) {
+            engine.Gui.rContent.innerHTML = `
+                <p>Oh wow, you're a ` + race + `!</p>`
         } else {
             engine.Gui.rContent.innerText = 'Here goes intro page ' + currentIntroPage + ' content, but we have none yet!'
         }
