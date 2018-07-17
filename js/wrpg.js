@@ -296,15 +296,16 @@ Zepto(function ($) {
         engine.Gui.wipeButtons()
 
         engine.Gui.rContent.innerHTML = `
-            <p>Welcome to the game!</p>
-            <p>Here's a thing, lol.</p>
-            <p>Ayyyyy.</p>
-            <p>Yeah yo.</p>
-            <p>They call you: <input class="name" type="text" placeholder="Name"></p>`
+            <p>Troto, a small settlement to the south. A villiage of misfits and outcasts, and your home since you were little.</p>
+            <p>How did you end up here? You barely remember anymore, probably for not being quite noble enough, not acting the right way, or just for taking some food to survive. Whatever it was, the people here took you in and helped raise you, even giving you a good education.</p>
+            <p>Your name is <input class="name" type="text" placeholder="">, and you're a...</p>`
 
         engine.Data.set('intro-page', 0)
 
-        engine.Gui.addButton('1', 'Confirm', 'Confirm', "It's what they call me!")
+        engine.Gui.addButton('1', 'Human', 'Human', 'Pointy sticks and weird faces')
+        engine.Gui.addButton('2', 'Unicorn', 'Unicorn', 'Magical druids')
+        engine.Gui.addButton('3', 'Half-Wyvern', 'Half-Wyvern', 'Almost a dragon, but not quite')
+        engine.Gui.addButton('4', 'Griffon', 'Griffon', 'Flappy Beak')
 
         return true
     })
@@ -318,9 +319,7 @@ Zepto(function ($) {
         var currentIntroPage = engine.Data.get('intro.page', 0)
 
         // exit if corrent button isn't pressed for this page
-        if ((currentIntroPage == 0) && (event != 'btn 1')) {
-            return false
-        } else if ((currentIntroPage == 1) && !['btn 1', 'btn 2', 'btn 3', 'btn 4'].includes(event)) {
+        if ((currentIntroPage == 0) && !['btn 1', 'btn 2', 'btn 3', 'btn 4'].includes(event)) {
             return false
         }
 
@@ -336,7 +335,7 @@ Zepto(function ($) {
 
             engine.Data.set('player.name', name)
             engine.Gui.rPlayerName.innerText = name
-        } else if (currentIntroPage == 1) {
+
             switch (event) {
             case 'btn 1':
                 race = 'Human'
@@ -363,14 +362,7 @@ Zepto(function ($) {
         // set content for this page
         if (currentIntroPage == 0) {
             engine.Gui.rContent.innerHTML = `
-                <p>Well, nice to meet you! And what race are you?</p>`
-            engine.Gui.addButton('1', 'Human', 'Human', 'Pointy sticks and weird faces')
-            engine.Gui.addButton('2', 'Unicorn', 'Unicorn', 'Magical druids')
-            engine.Gui.addButton('3', 'Half-Wyvern', 'Half-Wyvern', 'Almost a dragon, but not quite')
-            engine.Gui.addButton('4', 'Griffon', 'Griffon', 'Flappy Beak')
-        } else if (currentIntroPage == 1) {
-            engine.Gui.rContent.innerHTML = `
-                <p>Oh wow, you're a ` + race + `!</p>`
+                <p>Nice to meet you, ` + engine.Data.get('player.name') + `. Oh wow, you're a ` + race + `!</p>`
         } else {
             engine.Gui.rContent.innerText = 'Here goes intro page ' + currentIntroPage + ' content, but we have none yet!'
         }
