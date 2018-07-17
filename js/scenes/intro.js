@@ -2,34 +2,8 @@ import * as data from '../modules/data.js'
 
 // intro isn't so much a scene in and of itself, but it's what sets up the initial flow to the game
 export function setup(e) {
-    e.init()
-    e.Gui.blankScreen()
-
-    // add hover handler
-    var hoverButtons = document.querySelectorAll('.canhover')
-    var hoverHint = document.querySelector('#hover-hint')
-    hoverHint.classList.add('hidden')
-    var hoverHintTitle = document.querySelector('#hover-hint .title')
-    var hoverHintDescription = document.querySelector('#hover-hint .description')
-    for (var i = 0, len = hoverButtons.length; i < len; i++) {
-        hoverButtons[i].addEventListener('mouseenter', (event) => {
-            // console.log('hovering over button', event.currentTarget, event.currentTarget.dataset.title)
-            var title = event.currentTarget.dataset.title
-            var description = event.currentTarget.dataset.description
-            if ((title === undefined) || (description === undefined)) {
-                return
-            }
-            hoverHintTitle.innerText = title
-            hoverHintDescription.innerText = description
-            hoverHint.classList.remove('hidden')
-        })
-        hoverButtons[i].addEventListener('mouseleave', (event) => {
-            // console.log('  no longer hovering over button', event.currentTarget)
-            hoverHint.classList.add('hidden')
-        })
-    }
-
     // new game handler
+    // we have two separate handlers here for quicker abort based on engine state
     e.Events.addHandler('btn 1', (event) => {
         if (e.state !== 'start') {
             return false
@@ -123,6 +97,9 @@ export function setup(e) {
 }
 
 export function start(e) {
+    // clear any leftover content
+    e.Gui.blankScreen()
+
     // set initial content
     var content = document.querySelector('#main .center-pane .content')
     content.innerHTML = `
