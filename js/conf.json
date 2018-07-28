@@ -2,7 +2,7 @@
     "plugins": ["plugins/markdown"],
     "recurseDepth": 10,
     "source": {
-        "include": ["./modules", "./scenes", "./snippets.js"],
+        "include": ["./modules", "./scenes"],
         "exclude": []
     },
     "opts": {

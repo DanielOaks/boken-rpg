@@ -10,6 +10,7 @@ export class GuiManager {
         this.contentHistory = []
     }
 
+    /** Initializes the GUI selectors. */
     init() {
         this.rBars = document.querySelectorAll('#main .right-pane .main-info .bar')
         this.rBarValues = document.querySelectorAll('#main .right-pane .main-info .bar .value')
@@ -22,6 +23,7 @@ export class GuiManager {
         this.rTime = document.querySelector('#main .left-pane .timeholder .time .value')
     }
 
+    /** Blanks the whole screen and interface. */
     blankScreen() {
         this.rPlayerName.innerHTML = '&nbsp;'
         this.rContent.innerHTML = '&nbsp;'
@@ -35,14 +37,17 @@ export class GuiManager {
         for (var i = 0, len = this.rBarValues.length; i < len; i++) {
             this.rBarValues[i].innerText = '0'
         }
-        this.wipeButtons()
+        this.wipeControlButtons()
     }
 
+    /** Wipes all displayed (and stored) game content. */
     wipeContent() {
         this.contentHistory = []
         this.rContent.innerHTML = '&nbsp'
     }
-    wipeButtons() {
+
+    /** Wipes all the control buttons (1-5,q-t,a-g). */
+    wipeControlButtons() {
         for (var i = 0, len = this.rControlButtons.length; i < len; i++) {
             this.rControlButtons[i].classList.remove('active')
             this.rControlButtons[i].children[0].innerHTML = '&nbsp;'

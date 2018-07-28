@@ -1,6 +1,6 @@
+import * as buttons from './modules/buttons.js'
 import * as engine from './modules/engine.js'
 import * as intro from './scenes/intro.js'
-import * as snippets from './snippets.js'
 
 var e = new engine.GameEngine()
 console.log('engine is', engine)
@@ -8,7 +8,7 @@ console.log('engine is', engine)
 // initialize when page is loaded
 Zepto(function ($) {
     // setup info box when hovering over buttons
-    snippets.setupButtonHoverInfo()
+    buttons.setupButtonHoverInfo()
 
     // start game
     e.init()

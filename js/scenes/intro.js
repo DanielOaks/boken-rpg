@@ -13,7 +13,7 @@ export function setup(e) {
         e.state = 'intro'
 
         e.Gui.wipeContent()
-        e.Gui.wipeButtons()
+        e.Gui.wipeControlButtons()
 
         e.Gui.rContent.innerHTML = `
             <p>Troto, a small settlement to the south. A villiage of misfits and outcasts, and your home since you were little.</p>
@@ -77,7 +77,7 @@ export function setup(e) {
 
         // wipe content and buttons, to set new ones
         e.Gui.wipeContent()
-        e.Gui.wipeButtons()
+        e.Gui.wipeControlButtons()
 
         // set content for this page
         if (currentIntroPage == 0) {
