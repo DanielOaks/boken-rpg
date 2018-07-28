@@ -2,13 +2,13 @@ import * as engine from './modules/engine.js'
 import * as intro from './scenes/intro.js'
 import * as snippets from './snippets.js'
 
-var e = new engine.Engine()
+var e = new engine.GameEngine()
 console.log('engine is', engine)
 
 // initialize when page is loaded
 Zepto(function ($) {
     // setup info box when hovering over buttons
-    snippets.setupHoverInfo()
+    snippets.setupButtonHoverInfo()
 
     // start game
     e.init()

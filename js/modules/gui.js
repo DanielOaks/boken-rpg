@@ -1,4 +1,10 @@
-export class Manager {
+/**
+ * GUI module.
+ * @module core/gui
+ */
+
+/** The GuiManager controls the displayed content. */
+export class GuiManager {
     constructor() {
         this.currentButtons = {}
         this.contentHistory = []

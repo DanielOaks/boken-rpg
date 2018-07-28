@@ -1,0 +1,12 @@
+{
+    "plugins": ["plugins/markdown"],
+    "recurseDepth": 10,
+    "source": {
+        "include": ["./modules", "./scenes", "./snippets.js"],
+        "exclude": []
+    },
+    "opts": {
+        "destination": "./out/",
+        "recurse": true
+    }
+}

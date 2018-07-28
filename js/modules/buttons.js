@@ -1,4 +1,10 @@
-export class Manager {
+/**
+ * Buttons module.
+ * @module core/buttons
+ */
+
+/** The ButtonManager controls the user-pressable and activatable buttons. */
+export class ButtonManager {
     constructor(eventQueue) {
         this.eventQueue = eventQueue
 

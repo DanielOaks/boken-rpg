@@ -1,4 +1,5 @@
-export function setupHoverInfo() {
+/** Sets up the button-hover information displays. */
+export function setupButtonHoverInfo() {
     // add hover-info handler
     var hoverButtons = document.querySelectorAll('.canhover')
     var hoverHint = document.querySelector('#hover-hint')

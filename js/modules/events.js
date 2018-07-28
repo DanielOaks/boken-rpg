@@ -1,7 +1,14 @@
-// Queue turns a series of async incoming events into a sync stream of handler calls.
-// only works if all handlers are sync (don't return promises or w/e).
-// this is what allows the rest of the code to basically assume and run synchronously
-export class Queue {
+/**
+ * Events module.
+ * @module core/events
+ */
+
+/**
+ * EventQueue turns a series of async incoming events into a sync stream of handler calls.
+ * Only works if all handlers are synchronous (don't return promises of w/e).
+ * This allows the rest of the code to assume and run synchronously.
+ */
+export class EventQueue {
     constructor() {
         this.workingOnHandlers = false // manually-controlled mutex
         this.pendingHandlers = []
@@ -11,6 +18,11 @@ export class Queue {
         this.pendingEvents = []
     }
 
+    /**
+     * Adds a handler that gets called when the named event is dispatched.
+     * @param {string} name - Name of the event this handler responds to.
+     * @param {function} handler - Handler that takes the event data.
+     */
     addHandler(name, handler) {
         this.pendingHandlers.push({
             'name': name,
@@ -42,6 +54,10 @@ export class Queue {
         }
     }
 
+    /**
+     * Dispatches a given event, calling all the attached handlers for it.
+     * @param {string} name - Event to dispatch.
+     */
     dispatch(name) {
         console.log('dispatching event "' + name + '" -', this.handlers[name] === undefined ? 0 : this.handlers[name].length, 'handler(s)')
         this.pendingEvents.push(name)
