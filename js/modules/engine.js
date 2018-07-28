@@ -15,6 +15,7 @@ export class GameEngine {
         this.Buttons = new buttons.ButtonManager(this.Events)
         this.Data = new data.Datastore()
         this.Gui = new gui.GuiManager()
+        this.state = 'start'
     }
 
     /** Initialises the GameEngine, grabs required button and GUI elements. */

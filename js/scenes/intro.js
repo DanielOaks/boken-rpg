@@ -9,7 +9,7 @@ export function setup(e) {
             return false
         }
 
-        e.Data = data.Store()
+        e.Data = new data.Datastore()
         e.state = 'intro'
 
         e.Gui.wipeContent()

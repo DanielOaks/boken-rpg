@@ -3,7 +3,7 @@ import * as engine from './modules/engine.js'
 import * as intro from './scenes/intro.js'
 
 var e = new engine.GameEngine()
-console.log('engine is', engine)
+console.log('engine is', e)
 
 // initialize when page is loaded
 Zepto(function ($) {
