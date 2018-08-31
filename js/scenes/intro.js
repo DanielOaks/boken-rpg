@@ -57,18 +57,18 @@ export function setup(e) {
             e.Gui.rPlayerName.innerText = name
 
             switch (event) {
-            case 'btn 1':
-                race = 'Human'
-                break
-            case 'btn 2':
-                race = 'Unicorn'
-                break
-            case 'btn 3':
-                race = 'Half-Wyvern'
-                break
-            case 'btn 4':
-                race = 'Griffon'
-                break
+                case 'btn 1':
+                    race = 'Human'
+                    break
+                case 'btn 2':
+                    race = 'Unicorn'
+                    break
+                case 'btn 3':
+                    race = 'Half-Wyvern'
+                    break
+                case 'btn 4':
+                    race = 'Griffon'
+                    break
             }
         }
 
