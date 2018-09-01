@@ -37,4 +37,11 @@ export class GameEngine {
         this.Data.set('place', place)
         this.state = 'map' //TODO(dan): maybe required, maybe not? make optional eventually
     }
+
+    // here be convenience functions
+
+    /** Returns the player's name. */
+    pName() {
+        return this.Data.get('player.name', 'NoName')
+    }
 }
