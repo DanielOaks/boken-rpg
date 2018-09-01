@@ -78,7 +78,7 @@ export function setup(e) {
         for (const [direction, handler] of Object.entries(place.links)) {
             if (['n', 'e', 's', 'w'].includes(direction)) {
                 var btn = directionToButton[direction]
-                e.Gui.addButton(btn, 'Move ' + directionNames[direction])
+                e.Gui.addButton(btn, directionNames[direction])
             }
         }
 
