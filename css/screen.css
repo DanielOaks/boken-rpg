@@ -1381,6 +1381,9 @@ html, body { height: 100%; background: #77a; font-family: "Open Sans", sans-seri
 .three-pane .left-pane > .buttons .nbutton.active, .three-pane .right-pane > .buttons .nbutton.active { opacity: 1; cursor: pointer; }
 .three-pane .center-pane { display: flex; flex-direction: column; width: 100%; flex: 1 1 auto; padding: 0 0.5em; }
 .three-pane .center-pane > .content { flex: 1 1 auto; padding: 1em 0.7em; overflow-y: auto; line-height: 1.15; color: rgba(255, 255, 255, 0.95); }
+.three-pane .center-pane > .content h1, .three-pane .center-pane > .content h2, .three-pane .center-pane > .content h3, .three-pane .center-pane > .content h4 { margin-bottom: 0.3em; }
+.three-pane .center-pane > .content h1 { font-size: 1.7em; }
+.three-pane .center-pane > .content h2 { font-size: 1.5em; }
 .three-pane .center-pane > .content p + p { margin-top: 1em; }
 .three-pane .center-pane > .content input[type="text"] { font-size: 0.98em; background: #52527f; color: #fff; border-radius: 0.3em; border: 1px solid #4c4c6f; padding: 0.05em 0.2em 0.1em; }
 .three-pane .center-pane > .content input[type="text"]::placeholder { color: #ccd; }

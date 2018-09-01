@@ -1,5 +1,24 @@
 import * as data from '../modules/data.js'
 
+var md = window.markdownit()
+
+function doIntro(e) {
+    e.Gui.wipeContent()
+    e.Gui.wipeControlButtons()
+
+    e.Gui.rContent.innerHTML = `
+        <p>Troto, a small settlement to the south. A villiage of misfits and outcasts, and your home since you were little.</p>
+        <p>How did you end up here? You barely remember anymore, probably for not being quite noble enough, not acting the right way, or just for taking some food to survive. Whatever it was, the people here took you in and helped raise you, even giving you a good education.</p>
+        <p>Your name is <input class="name" type="text" placeholder="">, and you're a...</p>`
+
+    e.Data.set('intro.page', 0)
+
+    e.Gui.addButton('1', 'Human', 'Human', 'Pointy sticks and weird faces')
+    e.Gui.addButton('2', 'Unicorn', 'Unicorn', 'Magical druids')
+    e.Gui.addButton('3', 'Half-Wyvern', 'Half-Wyvern', 'Almost a dragon, but not quite')
+    e.Gui.addButton('4', 'Griffon', 'Griffon', 'Flappy Beak')
+}
+
 // intro isn't so much a scene in and of itself, but it's what sets up the initial flow to the game
 export function setup(e) {
     // new game handler
@@ -12,20 +31,7 @@ export function setup(e) {
         e.Data = new data.Datastore()
         e.state = 'intro'
 
-        e.Gui.wipeContent()
-        e.Gui.wipeControlButtons()
-
-        e.Gui.rContent.innerHTML = `
-            <p>Troto, a small settlement to the south. A villiage of misfits and outcasts, and your home since you were little.</p>
-            <p>How did you end up here? You barely remember anymore, probably for not being quite noble enough, not acting the right way, or just for taking some food to survive. Whatever it was, the people here took you in and helped raise you, even giving you a good education.</p>
-            <p>Your name is <input class="name" type="text" placeholder="">, and you're a...</p>`
-
-        e.Data.set('intro-page', 0)
-
-        e.Gui.addButton('1', 'Human', 'Human', 'Pointy sticks and weird faces')
-        e.Gui.addButton('2', 'Unicorn', 'Unicorn', 'Magical druids')
-        e.Gui.addButton('3', 'Half-Wyvern', 'Half-Wyvern', 'Almost a dragon, but not quite')
-        e.Gui.addButton('4', 'Griffon', 'Griffon', 'Flappy Beak')
+        doIntro(e)
 
         return true
     })
@@ -40,6 +46,8 @@ export function setup(e) {
 
         // exit if corrent button isn't pressed for this page
         if ((currentIntroPage == 0) && !['btn 1', 'btn 2', 'btn 3', 'btn 4'].includes(event)) {
+            return false
+        } else if ((currentIntroPage == 1) && !['btn 1', 'btn 2'].includes(event)) {
             return false
         }
 
@@ -70,6 +78,8 @@ export function setup(e) {
                     race = 'Griffon'
                     break
             }
+
+            e.Data.set('player.race', race.toLowerCase())
         }
 
         // set new page number
@@ -81,12 +91,16 @@ export function setup(e) {
 
         // set content for this page
         if (currentIntroPage == 0) {
-            e.Gui.rContent.innerHTML = `
-                <p>Nice to meet you, ` + e.Data.get('player.name') + `. Oh wow, you're a ` + race + `!</p>`
-            e.Gui.addButton('1', 'Continue')
-
-            // set data for next page
-            e.enterNewRegion('example')
+            e.Gui.rContent.innerHTML = md.render(`## ` + e.Data.get('player.name') + `\n\nRace: **` + race + `**\n\nIs this correct?`)
+            e.Gui.addButton('1', 'Continue', 'Continue', 'Get started on your adventure')
+            e.Gui.addButton('2', 'Go Back', 'Go Back', 'Create a new character')
+        } else if (currentIntroPage == 1) {
+            if (event == 'btn 1') {
+                e.enterNewRegion('example')
+                e.Events.dispatch('mapStart')
+            } else if (event == 'btn 2') {
+                doIntro(e)
+            }
         } else {
             e.Gui.rContent.innerText = 'Here goes intro page ' + currentIntroPage + ' content, but we have none yet!'
         }
@@ -106,10 +120,8 @@ export function start(e) {
 
     // set initial content
     var content = document.querySelector('#main .center-pane .content')
-    content.innerHTML = `
-<h1 class="game-title">WRPG</h1>
-
-<p>Welcome to WRPG! This RPG is a cool thing which you can play.</p>`
+    content.innerHTML = ` <h1 class="game-title">WRPG</h1>
+        <p> Welcome to WRPG! This RPG is a cool thing which you can play.</p>`
 
     e.Gui.addButton('1', 'New Game', 'Start a new game', 'Start playing!')
     e.Gui.addButton('2', 'Load', 'Load an existing game', 'Start playing!')

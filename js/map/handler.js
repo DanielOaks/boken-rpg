@@ -91,4 +91,5 @@ export function setup(e) {
     }
 
     e.Events.addAllButtonHandler(mapHandler)
+    e.Events.addHandler('mapStart', mapHandler)
 }
