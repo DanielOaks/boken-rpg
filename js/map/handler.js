@@ -2,11 +2,22 @@ import * as r from './regions.js'
 
 var regions = r.regions
 
+var directionToButton = {
+    'n': 'w',
+    'w': 'a',
+    's': 's',
+    'e': 'd',
+}
+var buttonToDirection = {}
+for (const [k, v] of Object.entries(directionToButton)) {
+    buttonToDirection[v] = [k]
+}
+
 var directionNames = {
-    'w': 'North',
+    'n': 'North',
+    'w': 'West',
     's': 'South',
-    'a': 'West',
-    'd': 'East',
+    'e': 'East',
 }
 
 // generic map handler
@@ -45,7 +56,8 @@ export function setup(e) {
         //TODO(dan): Click buttons to go to external places if that's being done, etc
         if (!enteringRegion) {
             var pressedBtn = event.substr(4)
-            var newPlace = place.links[pressedBtn]
+            var direction = buttonToDirection[pressedBtn]
+            var newPlace = place.links[direction]
             if (newPlace === undefined) {
                 // invalid button press
                 return
@@ -63,9 +75,10 @@ export function setup(e) {
         e.Gui.wipeControlButtons()
 
         // load movement buttons
-        for (const [key, handler] of Object.entries(place.links)) {
-            if (['w', 'a', 's', 'd'].includes(key)) {
-                e.Gui.addButton(key, 'Move ' + directionNames[key])
+        for (const [direction, handler] of Object.entries(place.links)) {
+            if (['n', 'e', 's', 'w'].includes(direction)) {
+                var btn = directionToButton[direction]
+                e.Gui.addButton(btn, 'Move ' + directionNames[direction])
             }
         }
 

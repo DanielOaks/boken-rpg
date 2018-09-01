@@ -11,7 +11,14 @@ export var region = {
         'shipWalkway1': {
             'desc': `There's a walkway overlooking both some of the ships being built and the desert far, far below you.`,
             'links': {
-                'w': 'ship',
+                'n': 'ship',
+                'w': 'shipWalkway2',
+            }
+        },
+        'shipWalkway2': {
+            'desc': `More walking about the ship, etc.`,
+            'links': {
+                'e': 'shipWalkway1',
             }
         },
     },
