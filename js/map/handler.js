@@ -43,9 +43,6 @@ export function setup(e) {
         var currentRegion = e.Data.get('region')
         var currentPlace = e.Data.get('place')
 
-        // kill all existing buttons
-        e.Gui.wipeControlButtons()
-
         // load region
         var region = regions[currentRegion]
         if (region === undefined) {
@@ -80,6 +77,9 @@ export function setup(e) {
             e.Data.set('place', newPlace)
         }
 
+        // kill all existing buttons
+        e.Gui.wipeControlButtons()
+
         // load movement buttons
         for (const [key, handler] of Object.entries(place.links)) {
             if (['w', 'a', 's', 'd'].includes(key)) {
@@ -92,7 +92,7 @@ export function setup(e) {
             e.Gui.rContent.innerHTML = md.render(`Entered region **` + region.name + '->' + currentPlace + '**\n\n' + place.desc)
             return
         }
-        e.Gui.rContent.innerText = `Travelling region ` + region.name + '->' + currentPlace
+        e.Gui.rContent.innerHTML = md.render(`Travelling region **` + region.name + '->' + currentPlace + '**\n\n' + place.desc)
     }
 
     e.Events.addAllButtonHandler(mapHandler)
