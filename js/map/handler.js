@@ -75,6 +75,7 @@ export function setup(e) {
                 return
             }
             e.Data.set('place', newPlace)
+            currentPlace = newPlace
         }
 
         // kill all existing buttons
