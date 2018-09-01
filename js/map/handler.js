@@ -3,13 +3,13 @@ var exampleRegion = {
     'defaultPlace': 'ship',
     'places': {
         'ship': {
-            'desc': "Your ship sits here, some workers scurrying about",
+            'desc': `Your ship sits here, some workers scurrying about.\n\nTo the south is a walkway towards the town proper.`,
             'links': {
                 's': 'shipWalkway1',
             },
         },
         'shipWalkway1': {
-            'desc': "There's a walkway overlooking both some of the ships being built and the desert far, far below you.",
+            'desc': `There's a walkway overlooking both some of the ships being built and the desert far, far below you.`,
         },
     },
 }
@@ -27,6 +27,8 @@ var directionNames = {
 
 // generic map handler
 export function setup(e) {
+    var md = window.markdownit()
+
     function mapHandler(event) {
         if (e.state !== 'map') {
             return false
@@ -66,7 +68,8 @@ export function setup(e) {
         }
 
         if (enteringRegion) {
-            e.Gui.rContent.innerText = `Entered region ` + region.name + '->' + currentPlace
+            // e.Gui.rContent.innerText = 
+            e.Gui.rContent.innerHTML = md.render(`Entered region **` + region.name + '->' + currentPlace + '**\n\n' + place.desc)
             return
         }
         e.Gui.rContent.innerText = `Travelling region ` + region.name + '->' + currentPlace
