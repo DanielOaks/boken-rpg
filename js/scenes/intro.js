@@ -6,10 +6,13 @@ function doIntro(e) {
     e.Gui.wipeContent()
     e.Gui.wipeControlButtons()
 
-    e.Gui.rContent.innerHTML = `
-        <p>Troto, a small settlement to the south. A villiage of misfits and outcasts, and your home since you were little.</p>
-        <p>How did you end up here? You barely remember anymore, probably for not being quite noble enough, not acting the right way, or just for taking some food to survive. Whatever it was, the people here took you in and helped raise you, even giving you a good education.</p>
-        <p>Your name is <input class="name" type="text" placeholder="">, and you're a...</p>`
+    e.Gui.rContent.innerHTML = md.render(`
+Troto, a settlement to the south. Known for its large number of misfits and outcasts, and your home since you were little.
+
+How did you end up here? You barely remember anymore, probably for not being quite noble enough, not acting the right way, or just for taking some food to survive.
+
+Whatever it was, you belonged here. The people of this settlement took you in and helped raise you, even giving you the opportunity for a good education.`) + `
+<p>Your name is <input class="name" type="text" placeholder="">, and you're a...</p>`
 
     e.Data.set('intro.page', 0)
 
@@ -48,6 +51,8 @@ export function setup(e) {
         if ((currentIntroPage == 0) && !['btn 1', 'btn 2', 'btn 3', 'btn 4'].includes(event)) {
             return false
         } else if ((currentIntroPage == 1) && !['btn 1', 'btn 2'].includes(event)) {
+            return false
+        } else if ((currentIntroPage == 2) && !['btn 1'].includes(event)) {
             return false
         }
 
@@ -96,11 +101,14 @@ export function setup(e) {
             e.Gui.addButton('2', 'Go Back', 'Go Back', 'Create a new character')
         } else if (currentIntroPage == 1) {
             if (event == 'btn 1') {
-                e.enterNewRegion('example')
-                e.Events.dispatch('mapStart')
+                e.Gui.rContent.innerHTML = md.render(`You're the assistant of the ruler-to-be, Princess Belea Canson. A beautiful, compassionate leader, she's worried about the struggles of the world as it picks itself up from the ashes left of the great war, all those years ago.`)
+                e.Gui.addButton('1', 'Continue')
             } else if (event == 'btn 2') {
                 doIntro(e)
             }
+        } else if (currentIntroPage == 2) {
+            e.enterNewRegion('example')
+            e.Events.dispatch('mapStart')
         } else {
             e.Gui.rContent.innerText = 'Here goes intro page ' + currentIntroPage + ' content, but we have none yet!'
         }
