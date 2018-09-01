@@ -10,6 +10,9 @@ var exampleRegion = {
         },
         'shipWalkway1': {
             'desc': `There's a walkway overlooking both some of the ships being built and the desert far, far below you.`,
+            'links': {
+                'w': 'ship',
+            }
         },
     },
 }
@@ -58,6 +61,23 @@ export function setup(e) {
         if (place === undefined) {
             e.Gui.rContent.innerText = `Could not load place ` + currentRegion + '->' + currentPlace
             return
+        }
+
+        // if we're moving between regions, move to the new one
+        //TODO(dan): Click buttons to go to external places if that's being done, etc
+        if (!enteringRegion) {
+            var pressedBtn = event.substr(4)
+            var newPlace = place.links[pressedBtn]
+            if (newPlace === undefined) {
+                // invalid button press
+                return
+            }
+            place = region.places[newPlace]
+            if (place === undefined) {
+                e.Gui.rContent.innerText = `Could not load place ` + currentRegion + '->' + currentPlace
+                return
+            }
+            e.Data.set('place', newPlace)
         }
 
         // load movement buttons
