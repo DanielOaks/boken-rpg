@@ -83,6 +83,10 @@ export function setup(e) {
         if (currentIntroPage == 0) {
             e.Gui.rContent.innerHTML = `
                 <p>Nice to meet you, ` + e.Data.get('player.name') + `. Oh wow, you're a ` + race + `!</p>`
+            e.Gui.addButton('1', 'Continue')
+
+            // set data for next page
+            e.enterNewRegion('example')
         } else {
             e.Gui.rContent.innerText = 'Here goes intro page ' + currentIntroPage + ' content, but we have none yet!'
         }

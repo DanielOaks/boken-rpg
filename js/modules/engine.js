@@ -23,4 +23,18 @@ export class GameEngine {
         this.Buttons.init()
         this.Gui.init()
     }
+
+    /** Sets a new region (and optionally place).
+     * @param {string} region - Region to enter.
+     * @param {string} [place] - Specific place to enter.
+     */
+    enterNewRegion(region, place) {
+        if (place === null) {
+            place = ''
+        }
+        this.enteringRegion = true
+        this.Data.set('region', region)
+        this.Data.set('place', place)
+        this.state = 'map' //TODO(dan): maybe required, maybe not? make optional eventually
+    }
 }

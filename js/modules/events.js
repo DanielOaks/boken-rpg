@@ -19,6 +19,30 @@ export class EventQueue {
     }
 
     /**
+     * Adds a handler to all 'game button' presses (1-5, q-t, a-g).
+     * @param {function} handler - Handler that takes the event data.
+     */
+    addAllButtonHandler(handler) {
+        this.addHandler('btn 1', handler)
+        this.addHandler('btn 2', handler)
+        this.addHandler('btn 3', handler)
+        this.addHandler('btn 4', handler)
+        this.addHandler('btn 5', handler)
+
+        this.addHandler('btn q', handler)
+        this.addHandler('btn w', handler)
+        this.addHandler('btn e', handler)
+        this.addHandler('btn r', handler)
+        this.addHandler('btn t', handler)
+
+        this.addHandler('btn a', handler)
+        this.addHandler('btn s', handler)
+        this.addHandler('btn d', handler)
+        this.addHandler('btn f', handler)
+        this.addHandler('btn g', handler)
+    }
+
+    /**
      * Adds a handler that gets called when the named event is dispatched.
      * @param {string} name - Name of the event this handler responds to.
      * @param {function} handler - Handler that takes the event data.
