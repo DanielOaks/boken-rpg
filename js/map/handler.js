@@ -76,7 +76,7 @@ export function setup(e) {
 
         // load movement buttons
         for (const [direction, handler] of Object.entries(place.links)) {
-            if (['n', 'e', 's', 'w'].includes(direction)) {
+            if (['n', 'e', 's', 'w'].includes(direction) && place.links[direction] !== '') {
                 var btn = directionToButton[direction]
                 e.Gui.addButton(btn, directionNames[direction])
             }

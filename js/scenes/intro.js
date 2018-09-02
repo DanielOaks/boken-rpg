@@ -70,18 +70,18 @@ export function setup(e) {
             e.Gui.rPlayerName.innerText = name
 
             switch (event) {
-                case 'btn 1':
-                    race = 'Human'
-                    break
-                case 'btn 2':
-                    race = 'Unicorn'
-                    break
-                case 'btn 3':
-                    race = 'Half-Wyvern'
-                    break
-                case 'btn 4':
-                    race = 'Griffon'
-                    break
+            case 'btn 1':
+                race = 'Human'
+                break
+            case 'btn 2':
+                race = 'Unicorn'
+                break
+            case 'btn 3':
+                race = 'Half-Wyvern'
+                break
+            case 'btn 4':
+                race = 'Griffon'
+                break
             }
 
             e.Data.set('player.race', race.toLowerCase())
@@ -173,7 +173,7 @@ You shortly take your leave, stepping out of her room, and vacating the castle i
             }
             e.Gui.addButton('1', 'Continue')
         } else if (currentIntroPage == 5) {
-            e.enterNewRegion('example')
+            e.enterNewRegion('troto', 'castleInnerEntrance')
             e.Events.dispatch('mapStart')
         } else {
             e.Gui.rContent.innerText = 'Here goes intro page ' + currentIntroPage + ' content, but we have none yet!'

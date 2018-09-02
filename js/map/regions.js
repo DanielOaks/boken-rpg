@@ -1,5 +1,5 @@
-import * as exampleRegion from './regions/example.js'
+import * as troto from './regions/troto.js'
 
 export var regions = {
-    'example': exampleRegion.region,
+    'troto': troto.region,
 }
