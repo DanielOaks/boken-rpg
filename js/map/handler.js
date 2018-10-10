@@ -106,7 +106,6 @@ export function setup(e) {
 
 function generateMap(region) {
     var exampleMap = []
-    console.log('aaa', exampleMap)
     var minX = 0,
         maxX = 0,
         minY = 0,
@@ -132,22 +131,24 @@ function generateMap(region) {
         if (exampleMap[x] === undefined) {
             exampleMap[x] = {}
         }
-        exampleMap[x][y] = true
-
-        var theseSearchables = []
-
-        console.log('processing place', place, entryDirection, x, y)
+        var exampleCount = exampleMap[x][y]
+        if (exampleCount === undefined) {
+            exampleCount = 0
+        }
+        exampleMap[x][y] = exampleCount + 1
 
         if (x < minX) {
             minX = x
         } else if (maxX < x) {
             maxX = x
         }
-        if (x < minY) {
+        if (y < minY) {
             minY = y
-        } else if (maxY < x) {
+        } else if (maxY < y) {
             maxY = y
         }
+
+        var theseSearchables = []
 
         for (const [dir, linkName] of Object.entries(place.links)) {
             if (dir === entryDirection) {
@@ -168,10 +169,10 @@ function generateMap(region) {
 
             switch (dir) {
             case 'n':
-                newY += 1
+                newY -= 1
                 break;
             case 's':
-                newY -= 1
+                newY += 1
                 break;
             case 'e':
                 newX += 1
@@ -199,31 +200,27 @@ function generateMap(region) {
         return theseSearchables
     }
     var searchables = processPlace(region.defaultPlace, defaultPlace, null, 0, 0)
-    console.log('searchables discovered:', searchables)
 
     while (0 < searchables.length) {
-        var newPlace = searchables.pop()
-        var newSearchables = processPlace(newPlace.name, newPlace.link, newPlace.entryDir, newPlace.x, newPlace.y)
+        var newPlace = searchables.shift()
 
-        console.log('searchables discovered:', newSearchables)
+        var newSearchables = processPlace(newPlace.name, newPlace.link, newPlace.entryDir, newPlace.x, newPlace.y)
         while (0 < newSearchables.length) {
             searchables.push(newSearchables.pop())
         }
     }
 
-    console.log('mapped out:', minX, maxX, minY, maxY)
-    console.log(exampleMap)
-
     // make text representation of map
     var mapText = ''
     for (var y = minY; y <= maxY; y++) {
         for (var x = minX; x <= maxX; x++) {
+            var count = exampleMap[x][y]
             if (x == 0 && y == 0) {
                 mapText += '0'
-            } else if (exampleMap[x][y] === true) {
-                mapText += 'x'
-            } else {
+            } else if (count === undefined || count === 0) {
                 mapText += ' '
+            } else {
+                mapText += count.toString()
             }
         }
         mapText += '\n'
