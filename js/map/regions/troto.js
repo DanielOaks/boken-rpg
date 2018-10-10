@@ -1,6 +1,7 @@
 export var region = {
     'name': 'Troto',
-    'defaultPlace': 'entrance',
+    // 'defaultPlace': 'entrance',
+    'defaultPlace': 'castleCourtyard',
     'places': {
         'castleInnerEntrance': {
             'desc': `.`,
