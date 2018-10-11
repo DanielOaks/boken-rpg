@@ -1,3 +1,4 @@
+import * as buttons from '../modules/buttons.js'
 import * as data from '../modules/data.js'
 
 var md = window.markdownit()
@@ -20,6 +21,8 @@ Whatever it was, you belonged here. The people of this settlement took you in an
     e.Gui.addButton('2', 'Unicorn', 'Unicorn', 'Magical druids')
     e.Gui.addButton('3', 'Half-Wyvern', 'Half-Wyvern', 'Almost a dragon, but not quite')
     e.Gui.addButton('4', 'Griffon', 'Griffon', 'Flappy Beak')
+
+    buttons.updateButtonHoverInfo()
 }
 
 // intro isn't so much a scene in and of itself, but it's what sets up the initial flow to the game
@@ -179,6 +182,8 @@ You shortly take your leave, stepping out of her room, and vacating the castle i
             e.Gui.rContent.innerText = 'Here goes intro page ' + currentIntroPage + ' content, but we have none yet!'
         }
 
+        buttons.updateButtonHoverInfo()
+
         return true
     }
 
@@ -199,4 +204,6 @@ export function start(e) {
 
     e.Gui.addButton('1', 'New Game', 'Start a new game', 'Start playing!')
     e.Gui.addButton('2', 'Load', 'Load an existing game', 'Start playing!')
+
+    buttons.updateButtonHoverInfo()
 }

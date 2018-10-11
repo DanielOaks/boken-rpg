@@ -1,3 +1,4 @@
+import * as buttons from '../modules/buttons.js'
 import * as r from './regions.js'
 
 var regions = r.regions
@@ -107,6 +108,9 @@ export function setup(e) {
                 e.sceneButtons[btn] = scene.scene
             }
         }
+
+        // update button hover information
+        buttons.updateButtonHoverInfo()
 
         generateMap(e, currentRegion, currentPlace)
 

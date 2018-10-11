@@ -3,6 +3,8 @@
  * @module core/gui
  */
 
+import * as buttons from './buttons.js'
+
 const controlButtonOrder = ['1', '2', '3', '4', '5', 'q', 'e', 'r', 't', 'f', 'g']
 
 /** The GuiManager controls the displayed content. */
@@ -40,6 +42,7 @@ export class GuiManager {
             this.rBarValues[i].innerText = '0'
         }
         this.wipeControlButtons()
+        buttons.updateButtonHoverInfo()
     }
 
     /** Wipes all displayed (and stored) game content. */
@@ -69,8 +72,14 @@ export class GuiManager {
         var button = document.querySelector('#main .center-pane > .buttons .kbutton[data-btn="' + btn + '"]')
         button.classList.add('active')
         button.querySelector('.word').innerText = shortName
-        button.dataset.title = title
-        button.dataset.description = description
+        delete button.dataset.title
+        if (title !== undefined) {
+            button.dataset.title = title
+        }
+        delete button.dataset.description
+        if (description !== undefined) {
+            button.dataset.description = description
+        }
     }
 
     buttonIsActive(btn) {

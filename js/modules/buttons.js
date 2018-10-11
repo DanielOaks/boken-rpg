@@ -56,6 +56,37 @@ export class ButtonManager {
     }
 }
 
+/** Updates the button-hover information display. */
+export function updateButtonHoverInfo() {
+    var hoverHint = document.querySelector('#hover-hint')
+    var hoverHintTitle = document.querySelector('#hover-hint .title')
+    var hoverHintDescription = document.querySelector('#hover-hint .description')
+
+    const btnName = hoverHint.dataset.btn
+    if (btnName === undefined) {
+        return
+    }
+
+    var hoverButtons = document.querySelectorAll('.canhover')
+    for (var btn of hoverButtons) {
+        if (btn.dataset.btn == btnName) {
+            if (btn.classList.contains('active')) {
+                var title = btn.dataset.title
+                var description = btn.dataset.description
+                if ((title === undefined) || (description === undefined)) {
+                    hoverHint.classList.add('hidden')
+                    return
+                }
+                hoverHintTitle.innerText = title
+                hoverHintDescription.innerText = description
+                hoverHint.classList.remove('hidden')
+            } else {
+                hoverHint.classList.add('hidden')
+            }
+        }
+    }
+}
+
 /** Sets up the button-hover information displays. */
 export function setupButtonHoverInfo() {
     // add hover-info handler
@@ -67,6 +98,7 @@ export function setupButtonHoverInfo() {
     for (var i = 0, len = hoverButtons.length; i < len; i++) {
         hoverButtons[i].addEventListener('mouseenter', (event) => {
             // console.log('hovering over button', event.currentTarget, event.currentTarget.dataset.title)
+            hoverHint.dataset.btn = event.currentTarget.dataset.btn
             var title = event.currentTarget.dataset.title
             var description = event.currentTarget.dataset.description
             if ((title === undefined) || (description === undefined)) {
@@ -78,6 +110,7 @@ export function setupButtonHoverInfo() {
         })
         hoverButtons[i].addEventListener('mouseleave', (event) => {
             // console.log('  no longer hovering over button', event.currentTarget)
+            delete hoverHint.dataset.btn
             hoverHint.classList.add('hidden')
         })
     }
