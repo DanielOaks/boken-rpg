@@ -194,8 +194,8 @@ export function start(e) {
 
     // set initial content
     var content = document.querySelector('#main .center-pane .content')
-    content.innerHTML = ` <h1 class="game-title">WRPG</h1>
-        <p> Welcome to WRPG! This RPG is a cool thing which you can play.</p>`
+    content.innerHTML = ` <h1 class="game-title">Boken Engine</h1>
+        <p>Welcome to the Boken Engine example game. Hope this is interesting!</p>`
 
     e.Gui.addButton('1', 'New Game', 'Start a new game', 'Start playing!')
     e.Gui.addButton('2', 'Load', 'Load an existing game', 'Start playing!')
