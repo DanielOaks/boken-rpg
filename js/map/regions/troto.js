@@ -1,6 +1,7 @@
 export var region = {
     'name': 'Troto',
-    'defaultPlace': 'entrance',
+    // 'defaultPlace': 'entrance',
+    'defaultPlace': 'castleInnerEntrance',
     'places': {
         'castleInnerEntrance': {
             'desc': `.`,
@@ -40,6 +41,14 @@ export var region = {
         },
         'castleEntrance': {
             'desc': `Two guards stand here, each giving you a nod..`,
+            'character': true,
+            'scenes': [
+                {
+                    'name': 'Guards',
+                    'description': 'Talk to the gate guards',
+                    'scene': 'troto_gate_guards',
+                }
+            ],
             'links': {
                 'n': '',
                 's': '',

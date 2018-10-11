@@ -105,7 +105,7 @@ export function setup(e) {
 }
 
 function generateMap(region) {
-    var exampleMap = []
+    var mapAttributes = []
     var minX = 0,
         maxX = 0,
         minY = 0,
@@ -127,16 +127,27 @@ function generateMap(region) {
         }
         searchedPlaces[name] = true
 
-        // add to our example map for now
-        if (exampleMap[x] === undefined) {
-            exampleMap[x] = {}
+        // set our map attributes
+        if (mapAttributes[x] === undefined) {
+            mapAttributes[x] = {}
         }
-        var exampleCount = exampleMap[x][y]
-        if (exampleCount === undefined) {
-            exampleCount = 0
-        }
-        exampleMap[x][y] = exampleCount + 1
+        var spaceAttributes = mapAttributes[x][y]
 
+        if (spaceAttributes === undefined) {
+            spaceAttributes = {
+                count: 0,
+            }
+        }
+        spaceAttributes.count = spaceAttributes.count + 1
+
+        delete spaceAttributes.character
+        if (place.character) {
+            spaceAttributes.character = true
+        }
+
+        mapAttributes[x][y] = spaceAttributes
+
+        // set min/max bounding for sizes
         if (x < minX) {
             minX = x
         } else if (maxX < x) {
@@ -148,6 +159,7 @@ function generateMap(region) {
             maxY = y
         }
 
+        // new searchable locations from here
         var theseSearchables = []
 
         for (const [dir, linkName] of Object.entries(place.links)) {
@@ -160,6 +172,7 @@ function generateMap(region) {
             var link = region.places[linkName]
             if (link === undefined) {
                 //TODO(dan): add some error indication here
+                mapAttributes[x][y].error = true
                 continue
             }
 
@@ -214,13 +227,21 @@ function generateMap(region) {
     var mapText = ''
     for (var y = minY; y <= maxY; y++) {
         for (var x = minX; x <= maxX; x++) {
-            var count = exampleMap[x][y]
+            var spaceAttributes = mapAttributes[x][y]
             if (x == 0 && y == 0) {
                 mapText += '0'
-            } else if (count === undefined || count === 0) {
+            } else if (spaceAttributes === undefined || spaceAttributes.count === 0) {
                 mapText += ' '
+            } else if (spaceAttributes.count === 1) {
+                if (spaceAttributes.error) {
+                    mapText += 'e'
+                } else if (spaceAttributes.character) {
+                    mapText += 'c'
+                } else {
+                    mapText += 'x'
+                }
             } else {
-                mapText += count.toString()
+                mapText += spaceAttributes.count.toString()
             }
         }
         mapText += '\n'
