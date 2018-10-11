@@ -195,7 +195,7 @@ function generateMap(region) {
                 break;
 
             default:
-                console.log('somethine went wrong while evaluating map:', name, place, entryDirection, x, y);
+                console.log('ERROR: somethine went wrong while evaluating map:', name, place, entryDirection, x, y);
                 return
             }
 
