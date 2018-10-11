@@ -1,5 +1,6 @@
 import * as s from './scenes.js'
 
+var md = window.markdownit()
 var scenes = s.scenes
 
 // generic scene handler
@@ -71,6 +72,10 @@ function processPage(e, scene, pageNumber) {
     e.wipeSceneButtons()
 
     // run page
+    if (pageNumber < scene.pages.length) {
+        var pageContent = scene.pages[pageNumber]
+        e.Gui.rContent.innerHTML = md.render(pageContent)
+    }
 
     if (scene.pages.length <= pageNumber) {
         // scene is finished, return to map
