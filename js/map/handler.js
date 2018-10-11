@@ -73,7 +73,7 @@ export function setup(e) {
             var pressedBtn = event.substr(4)
             var direction = buttonToDirection[pressedBtn]
             var newPlace = place.links[direction]
-            if (newPlace === undefined) {
+            if (newPlace === undefined || newPlace === '') {
                 // invalid button press
                 return
             }
@@ -285,7 +285,7 @@ function generateMap(e, regionName, place) {
         samplingMapText += '\n'
         graphicalMapText += '\n'
     }
-    console.log(graphicalMapText)
+    // console.log(graphicalMapText)
     if (samplingMapText !== e.currentSampledMap) {
         // console.log('map changed')
         e.currentSampledMap = samplingMapText
@@ -336,7 +336,7 @@ function generateMap(e, regionName, place) {
             }
             if (x === 0 && y === 0) {
                 ctx.fillStyle = '#946564'
-                console.log('place is:', x, y, 'or', x + offsetX, y + offsetY, 'or', mapPlaceWidth * (x + offsetX) + mapWSpace * Math.max(0, x + offsetX - 1), mapPlaceHeight * (y + offsetY) + mapHSpace * Math.max(0, y + offsetY - 1))
+                // console.log('place is:', x, y, 'or', x + offsetX, y + offsetY, 'or', mapPlaceWidth * (x + offsetX) + mapWSpace * Math.max(0, x + offsetX - 1), mapPlaceHeight * (y + offsetY) + mapHSpace * Math.max(0, y + offsetY - 1))
             }
 
             roundedRect(ctx, mapPlaceWidth * (x + offsetX) + mapWSpace * (x + offsetX), mapPlaceHeight * (y + offsetY) + mapHSpace * (y + offsetY), mapPlaceWidth, mapPlaceHeight, 10)
