@@ -27,6 +27,12 @@ var directionNames = {
     'e': 'East',
 }
 
+// sizes in CSS pixels, because why not
+const mapPlaceHeight = 40
+const mapPlaceWidth = 40
+const mapHSpace = 20
+const mapWSpace = 20
+
 // generic map handler
 export function setup(e) {
     var md = window.markdownit()
@@ -103,10 +109,12 @@ export function setup(e) {
     e.Events.addHandler('mapStart', mapHandler)
 
     e.currentSampledMap = ''
+    e.regionMapElement = document.getElementById('region-map')
+    e.currentMapCanvasElement = null
 
-    //TODO(dan): make the default region+place somewhere more appropriate?
+    //TODO(dan): put the default region+place strings somewhere more appropriate?
     var regionName = e.Data.get('region', 'troto')
-    var place = e.Data.get('place', 'entrance')
+    var place = e.Data.get('place', 'castleCourtyard')
     generateMap(e, regionName, place)
 }
 
@@ -149,9 +157,11 @@ function generateMap(e, regionName, place) {
         if (spaceAttributes === undefined) {
             spaceAttributes = {
                 count: 0,
+                names: [],
             }
         }
         spaceAttributes.count = spaceAttributes.count + 1
+        spaceAttributes.names.push(name)
 
         delete spaceAttributes.character
         if (place.character) {
@@ -241,6 +251,9 @@ function generateMap(e, regionName, place) {
     var graphicalMapText = '' // nice visual representation of the map for the console
     for (var y = minY; y <= maxY; y++) {
         for (var x = minX; x <= maxX; x++) {
+            var spaceAttributes = mapAttributes[x][y]
+
+            // modify sampling map text
             if (spaceAttributes === undefined) {
                 samplingMapText += '-'
             } else {
@@ -253,7 +266,7 @@ function generateMap(e, regionName, place) {
                 }
             }
 
-            var spaceAttributes = mapAttributes[x][y]
+            // modify graphical map text
             if (x == 0 && y == 0) {
                 graphicalMapText += '0'
             } else if (spaceAttributes === undefined || spaceAttributes.count === 0) {
@@ -277,7 +290,137 @@ function generateMap(e, regionName, place) {
     if (samplingMapText !== e.currentSampledMap) {
         console.log('map changed, redrawing')
         e.currentSampledMap = samplingMapText
+
+        // var newMapContainer = document.createElement('div')
+        // newMapContainer.classList.add('map')
+
+        // for (var y = minY; y <= maxY; y++) {
+        //     for (var x = minX; x <= maxX; x++) {
+        //         var spaceAttributes = mapAttributes[x][y]
+        //         if (spaceAttributes === undefined || spaceAttributes.count === 0) {
+        //             continue
+        //         }
+
+        //         var newPlaceDiv = document.createElement('div')
+        //         newPlaceDiv.classList.add('map-place')
+        //         newPlaceDiv.dataset['name'] = spaceAttributes.names[0]
+
+        //         // set attributes
+        //         if (spaceAttributes.error) {
+        //             newPlaceDiv.classList.add('error')
+        //         }
+        //         if (spaceAttributes.character) {
+        //             newPlaceDiv.classList.add('char')
+        //         }
+
+        //         if (x == 0 && y == 0) {
+        //             newPlaceDiv.id = 'mapCurrentPcPlace'
+        //             newPlaceDiv.classList.add('pc')
+        //         }
+
+        //         // set location lol
+        //         var borderX = Math.max(0, Math.abs(x) - 1)
+        //         if (x < 0) {
+        //             borderX *= -1
+        //         }
+        //         newPlaceDiv.style.left = 'calc(' + x + '*' + mapPlaceWidth + '+' + borderX + '*' + mapHSpace + ')'
+        //         console.log('left style:', 'calc(' + x + '*' + mapPlaceWidth + '+' + borderX + '*' + mapHSpace + ')')
+
+        //         // and append
+        //         newMapContainer.appendChild(newPlaceDiv)
+        //     }
+        // }
+
+        // console.log('new element:', newMapContainer)
+
+        // e.regionMapElement.innerHTML = newMapContainer.innerHTML
     } else {
         console.log('map is the same')
     }
+
+    // remove old canvas
+    if (e.currentMapCanvasElement !== null) {
+        e.currentMapCanvasElement.parentNode.removeChild(e.currentMapCanvasElement)
+        e.currentMapCanvasElement = null
+    }
+
+    // generate and apply new map canvas
+    const widthInPlaces = Math.abs(minX - maxX) + 1
+    const heightInPlaces = Math.abs(minY - maxY) + 1
+    const widthInSpacers = Math.abs(minX - maxX)
+    const heightInSpacers = Math.abs(minY - maxY)
+
+    var canvas = document.createElement('canvas')
+    canvas.width = widthInPlaces * mapPlaceWidth + widthInSpacers * mapWSpace
+    canvas.height = heightInPlaces * mapPlaceHeight + heightInSpacers * mapHSpace
+
+    e.currentMapCanvasElement = canvas
+    e.regionMapElement.appendChild(canvas)
+
+    var ctx = setupCanvas(canvas)
+
+    const offsetX = Math.abs(minX)
+    const offsetY = Math.abs(minY)
+
+    //TODO(dan): store connections between places and draw them on the canvas too
+
+    for (var y = minY; y <= maxY; y++) {
+        for (var x = minX; x <= maxX; x++) {
+            var spaceAttributes = mapAttributes[x][y]
+            if (spaceAttributes === undefined || spaceAttributes.count === 0) {
+                continue
+            }
+
+            ctx.fillStyle = '#656494';
+            if (spaceAttributes.error) {
+                ctx.fillStyle = '#942445';
+            }
+            if (x === 0 && y === 0) {
+                ctx.fillStyle = '#946564'
+                console.log('place is:', x, y, 'or', x + offsetX, y + offsetY, 'or', mapPlaceWidth * (x + offsetX) + mapWSpace * Math.max(0, x + offsetX - 1), mapPlaceHeight * (y + offsetY) + mapHSpace * Math.max(0, y + offsetY - 1))
+            }
+
+            roundedRect(ctx, mapPlaceWidth * (x + offsetX) + mapWSpace * (x + offsetX), mapPlaceHeight * (y + offsetY) + mapHSpace * (y + offsetY), mapPlaceWidth, mapPlaceHeight, 10)
+        }
+    }
+
+    // center the canvas
+    canvas.style.left = '-150px'
+    canvas.style.top = '-18px'
+}
+
+// canvas high-DPI setup function, from https://www.html5rocks.com/en/tutorials/canvas/hidpi/
+function setupCanvas(canvas) {
+    // Get the device pixel ratio, falling back to 1.
+    var dpr = window.devicePixelRatio || 1;
+    dpr = dpr * 1 //TODO(dan): maybe scale up a bit so the edges don't look so dodgy
+    // Get the size of the canvas in CSS pixels.
+    var rect = canvas.getBoundingClientRect();
+
+    // Give the canvas pixel dimensions of their CSS
+    // size * the device pixel ratio.
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + 'px'
+
+    var ctx = canvas.getContext('2d');
+    // Scale all drawing operations by the dpr, so you
+    // don't have to worry about the difference.
+    ctx.scale(dpr, dpr);
+    return ctx;
+}
+
+// canvas utility function, from the Mozilla MDN
+function roundedRect(ctx, x, y, width, height, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + radius);
+    ctx.lineTo(x, y + height - radius);
+    ctx.arcTo(x, y + height, x + radius, y + height, radius);
+    ctx.lineTo(x + width - radius, y + height);
+    ctx.arcTo(x + width, y + height, x + width, y + height - radius, radius);
+    ctx.lineTo(x + width, y + radius);
+    ctx.arcTo(x + width, y, x + width - radius, y, radius);
+    ctx.lineTo(x + radius, y);
+    ctx.arcTo(x, y, x, y + radius, radius);
+    ctx.fill();
 }
