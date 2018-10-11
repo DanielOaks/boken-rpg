@@ -33,6 +33,8 @@ const mapPlaceWidth = 40
 const mapHSpace = 20
 const mapWSpace = 20
 
+var imgErrorPattern
+
 // generic map handler
 export function setup(e) {
     var md = window.markdownit()
@@ -111,6 +113,8 @@ export function setup(e) {
     e.currentSampledMap = ''
     e.regionMapElement = document.getElementById('region-map')
     e.currentMapCanvasElement = null
+
+    imgErrorPattern = createPinstripeCanvas('#abaad4', '#942445', 11)
 }
 
 function generateMap(e, regionName, place) {
@@ -326,6 +330,10 @@ function generateMap(e, regionName, place) {
             if (spaceAttributes.error) {
                 ctx.fillStyle = '#942445';
             }
+            if (1 < spaceAttributes.count) {
+                var pattern = ctx.createPattern(imgErrorPattern, 'repeat')
+                ctx.fillStyle = pattern
+            }
             if (x === 0 && y === 0) {
                 ctx.fillStyle = '#946564'
                 console.log('place is:', x, y, 'or', x + offsetX, y + offsetY, 'or', mapPlaceWidth * (x + offsetX) + mapWSpace * Math.max(0, x + offsetX - 1), mapPlaceHeight * (y + offsetY) + mapHSpace * Math.max(0, y + offsetY - 1))
@@ -381,11 +389,62 @@ function setupCanvas(canvas) {
     canvas.height = rect.height * dpr;
     canvas.style.width = rect.width + 'px'
 
-    var ctx = canvas.getContext('2d');
+    var ctx = canvas.getContext('2d', {
+        antialias: true
+    });
     // Scale all drawing operations by the dpr, so you
     // don't have to worry about the difference.
     ctx.scale(dpr, dpr);
     return ctx;
+}
+
+// from https://stackoverflow.com/questions/32201479/continuous-hatch-line-needed-in-canvas-with-repeated-pattern
+function createPinstripeCanvas(bgColor, stripeColor, size) {
+    const patternCanvas = document.createElement('canvas');
+    const pctx = patternCanvas.getContext('2d', {
+        antialias: true
+    });
+    const CANVAS_SIDE_LENGTH = size;
+    const WIDTH = CANVAS_SIDE_LENGTH;
+    const HEIGHT = CANVAS_SIDE_LENGTH;
+    const DIVISIONS = 4;
+
+    patternCanvas.width = WIDTH;
+    patternCanvas.height = HEIGHT;
+
+    pctx.fillStyle = bgColor
+    pctx.fillRect(0, 0, WIDTH, HEIGHT)
+
+    pctx.fillStyle = stripeColor;
+
+    // Top line
+    pctx.beginPath();
+    pctx.moveTo(0, HEIGHT * (1 / DIVISIONS));
+    pctx.lineTo(WIDTH * (1 / DIVISIONS), 0);
+    pctx.lineTo(0, 0);
+    pctx.lineTo(0, HEIGHT * (1 / DIVISIONS));
+    pctx.fill();
+
+    // Middle line
+    pctx.beginPath();
+    pctx.moveTo(WIDTH, HEIGHT * (1 / DIVISIONS));
+    pctx.lineTo(WIDTH * (1 / DIVISIONS), HEIGHT);
+    pctx.lineTo(0, HEIGHT);
+    pctx.lineTo(0, HEIGHT * ((DIVISIONS - 1) / DIVISIONS));
+    pctx.lineTo(WIDTH * ((DIVISIONS - 1) / DIVISIONS), 0);
+    pctx.lineTo(WIDTH, 0);
+    pctx.lineTo(WIDTH, HEIGHT * (1 / DIVISIONS));
+    pctx.fill();
+
+    // Bottom line
+    pctx.beginPath();
+    pctx.moveTo(WIDTH, HEIGHT * ((DIVISIONS - 1) / DIVISIONS));
+    pctx.lineTo(WIDTH * ((DIVISIONS - 1) / DIVISIONS), HEIGHT);
+    pctx.lineTo(WIDTH, HEIGHT);
+    pctx.lineTo(WIDTH, HEIGHT * ((DIVISIONS - 1) / DIVISIONS));
+    pctx.fill();
+
+    return patternCanvas;
 }
 
 // canvas utility function, from the Mozilla MDN
