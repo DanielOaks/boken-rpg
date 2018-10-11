@@ -1394,6 +1394,6 @@ html, body { height: 100%; background: #77a; font-family: "Open Sans", sans-seri
 .three-pane .center-pane > .buttons .kbutton.wasd { background: #a23247; }
 .three-pane .center-pane > .buttons .kbutton.wasd .key > div { color: #a23247; border-color: #a23247; }
 .three-pane .center-pane > .buttons .kbutton.active { opacity: 1; cursor: pointer; }
-.three-pane .center-pane > .buttons .kbutton .word { flex: 1 1 auto; width: 100%; overflow: hidden; white-space: nowrap; padding-top: 0.45em; }
+.three-pane .center-pane > .buttons .kbutton .word { flex: 1 1 auto; width: 100%; overflow: hidden; white-space: nowrap; padding-top: 0.45em; user-select: none; }
 .three-pane .center-pane > .buttons .kbutton .key { width: 0; flex: 0 0 auto; position: absolute; }
 .three-pane .center-pane > .buttons .kbutton .key > div { text-transform: uppercase; box-sizing: border-box; display: block; text-align: center; height: 1.5em; width: 1.5em; padding-top: 0.185em; float: right; bottom: -2em; right: -1.2em; position: relative; font-size: 0.65em; color: #373761; border-radius: 1em; background: #77a; border: 1px solid #525280; }
