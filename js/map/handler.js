@@ -288,54 +288,10 @@ function generateMap(e, regionName, place) {
     }
     console.log(graphicalMapText)
     if (samplingMapText !== e.currentSampledMap) {
-        console.log('map changed, redrawing')
+        // console.log('map changed')
         e.currentSampledMap = samplingMapText
-
-        // var newMapContainer = document.createElement('div')
-        // newMapContainer.classList.add('map')
-
-        // for (var y = minY; y <= maxY; y++) {
-        //     for (var x = minX; x <= maxX; x++) {
-        //         var spaceAttributes = mapAttributes[x][y]
-        //         if (spaceAttributes === undefined || spaceAttributes.count === 0) {
-        //             continue
-        //         }
-
-        //         var newPlaceDiv = document.createElement('div')
-        //         newPlaceDiv.classList.add('map-place')
-        //         newPlaceDiv.dataset['name'] = spaceAttributes.names[0]
-
-        //         // set attributes
-        //         if (spaceAttributes.error) {
-        //             newPlaceDiv.classList.add('error')
-        //         }
-        //         if (spaceAttributes.character) {
-        //             newPlaceDiv.classList.add('char')
-        //         }
-
-        //         if (x == 0 && y == 0) {
-        //             newPlaceDiv.id = 'mapCurrentPcPlace'
-        //             newPlaceDiv.classList.add('pc')
-        //         }
-
-        //         // set location lol
-        //         var borderX = Math.max(0, Math.abs(x) - 1)
-        //         if (x < 0) {
-        //             borderX *= -1
-        //         }
-        //         newPlaceDiv.style.left = 'calc(' + x + '*' + mapPlaceWidth + '+' + borderX + '*' + mapHSpace + ')'
-        //         console.log('left style:', 'calc(' + x + '*' + mapPlaceWidth + '+' + borderX + '*' + mapHSpace + ')')
-
-        //         // and append
-        //         newMapContainer.appendChild(newPlaceDiv)
-        //     }
-        // }
-
-        // console.log('new element:', newMapContainer)
-
-        // e.regionMapElement.innerHTML = newMapContainer.innerHTML
     } else {
-        console.log('map is the same')
+        // console.log('map is the same')
     }
 
     // remove old canvas
@@ -385,8 +341,35 @@ function generateMap(e, regionName, place) {
     }
 
     // center the canvas
-    canvas.style.left = '-150px'
-    canvas.style.top = '-18px'
+    const canvasWidth = canvas.getBoundingClientRect().width,
+        canvasHeight = canvas.getBoundingClientRect().height,
+        boundWidth = e.regionMapElement.getBoundingClientRect().width,
+        boundHeight = e.regionMapElement.getBoundingClientRect().height
+
+    const canvasCalcWidth = widthInPlaces * mapPlaceWidth + widthInSpacers * mapWSpace,
+        canvasCalcHeight = heightInPlaces * mapPlaceHeight + heightInSpacers * mapHSpace,
+        middleW = mapPlaceWidth * offsetX + mapWSpace * offsetX + mapPlaceWidth / 2,
+        middleH = mapPlaceHeight * offsetY + mapHSpace * offsetY + mapPlaceHeight / 2
+
+    const canvasCalcMidWidth = canvasWidth * (middleW / canvasCalcWidth),
+        canvasCalcMidHeight = canvasHeight * (middleH / canvasCalcHeight)
+
+    var canvasModifyMiddleW = Math.abs(boundWidth / 2 - canvasCalcMidWidth),
+        canvasModifyMiddleH = Math.abs(boundHeight / 2 - canvasCalcMidHeight)
+
+    if (boundWidth / 2 < canvasCalcMidWidth) {
+        canvasModifyMiddleW *= -1
+    }
+    if (boundHeight / 2 < canvasCalcMidHeight) {
+        canvasModifyMiddleH *= -1
+    }
+
+    // console.log('center of the map is:', canvasCalcMidWidth, canvasCalcMidHeight)
+    // console.log('center of the bound is:', boundWidth / 2, boundHeight / 2)
+    // console.log('ccc', canvasModifyMiddleW, canvasModifyMiddleH)
+
+    canvas.style.left = canvasModifyMiddleW.toString() + 'px'
+    canvas.style.top = canvasModifyMiddleH.toString() + 'px'
 }
 
 // canvas high-DPI setup function, from https://www.html5rocks.com/en/tutorials/canvas/hidpi/
