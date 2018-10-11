@@ -14,7 +14,7 @@ export function setup(e) {
             return false
         }
 
-        console.log('We should load and run scene:', sceneToLoad)
+        e.Gui.rContent.innerText = "We should load scene " + sceneToLoad + ", but we're not able to yet"
     }
 
     function sceneHandler(event) {
