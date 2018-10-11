@@ -383,7 +383,8 @@ function generateMap(e, regionName, place) {
     // console.log('ccc', canvasModifyMiddleW, canvasModifyMiddleH)
 
     canvas.style.left = canvasModifyMiddleW.toString() + 'px'
-    canvas.style.top = canvasModifyMiddleH.toString() + 'px'
+    // canvas.style.top = canvasModifyMiddleH.toString() + 'px'
+    canvas.style.top = '-' + canvasCalcMidHeight + 'px' // 50% is handled by helper div in the map container
 }
 
 // canvas high-DPI setup function, from https://www.html5rocks.com/en/tutorials/canvas/hidpi/

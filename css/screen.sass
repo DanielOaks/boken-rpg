@@ -56,6 +56,7 @@ html, body
 
     .left-pane
         > .main-info
+            height: calc(100%)
             border-radius: 0 0 0.5em 0
             .place, .region-name
                 padding: 0.5em
@@ -150,7 +151,12 @@ html, body
                 border-radius: 0.4em
                 text-align: center
                 overflow: hidden
-                > canvas
+                width: 100%
+                height: calc(100%)
+                .map-spacer
+                    height: calc(50%)
+
+                canvas
                     position: relative
             > .time
                 margin-bottom: 0.5em
