@@ -366,6 +366,9 @@ function generateMap(e, regionName, place) {
 
             var text = []
 
+            if (1 < spaceAttributes.count) {
+                text.push('overlap')
+            }
             if (spaceAttributes.error) {
                 text.push('error')
             }
