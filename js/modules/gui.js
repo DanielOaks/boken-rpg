@@ -3,6 +3,8 @@
  * @module core/gui
  */
 
+const controlButtonOrder = ['1', '2', '3', '4', '5', 'q', 'e', 'r', 't', 'f', 'g']
+
 /** The GuiManager controls the displayed content. */
 export class GuiManager {
     constructor() {
@@ -69,5 +71,21 @@ export class GuiManager {
         button.querySelector('.word').innerText = shortName
         button.dataset.title = title
         button.dataset.description = description
+    }
+
+    buttonIsActive(btn) {
+        return this.currentButtons[btn] !== undefined
+    }
+
+    nextFreeControlButton() {
+        var key
+        for (key of controlButtonOrder) {
+            if (!this.buttonIsActive(key)) {
+                return key
+            }
+        }
+        //TODO(dan): second page of buttons will be working here
+        console.log('ERROR: tried to find free control button but could not find one')
+        return null
     }
 }

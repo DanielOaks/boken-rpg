@@ -39,6 +39,11 @@ export class GameEngine {
     }
 
     // here be convenience functions
+    wipeSceneButtons() {
+        this.sceneButtons = {}
+    }
+
+    // here be script convenience functions
 
     /** Returns the player's name. */
     pName() {

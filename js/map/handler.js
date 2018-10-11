@@ -88,12 +88,23 @@ export function setup(e) {
 
         // kill all existing buttons
         e.Gui.wipeControlButtons()
+        e.wipeSceneButtons()
 
         // load movement buttons
         for (const [direction, handler] of Object.entries(place.links)) {
             if (['n', 'e', 's', 'w'].includes(direction) && place.links[direction] !== '') {
-                var btn = directionToButton[direction]
+                const btn = directionToButton[direction]
                 e.Gui.addButton(btn, directionNames[direction])
+            }
+        }
+
+        // load scene buttons
+        if (place.scenes !== undefined) {
+            for (const scene of place.scenes) {
+                const btn = e.Gui.nextFreeControlButton()
+                // console.log('adding scene button', scene.scene, 'as button', btn)
+                e.Gui.addButton(btn, scene.name, scene.name, scene.description)
+                e.sceneButtons[btn] = scene.scene
             }
         }
 

@@ -1,5 +1,22 @@
 // generic scene handler
 export function setup(e) {
+    function sceneStartHandler(event) {
+        if (e.state !== 'map') {
+            return false
+        }
+        if (!event.startsWith('btn ')) {
+            return false
+        }
+
+        var pressedBtn = event.substr(4)
+        var sceneToLoad = e.sceneButtons[pressedBtn]
+        if (sceneToLoad === undefined) {
+            return false
+        }
+
+        console.log('We should load and run scene:', sceneToLoad)
+    }
+
     function sceneHandler(event) {
         if (e.state !== 'scene') {
             return false
@@ -10,5 +27,8 @@ export function setup(e) {
         e.Gui.rContent.innerText = "We're in scene " + currentScene + ", but there's no content for it yet"
     }
 
+    e.Events.addAllButtonHandler(sceneStartHandler)
     e.Events.addAllButtonHandler(sceneHandler)
+
+    e.sceneButtons = {}
 }
