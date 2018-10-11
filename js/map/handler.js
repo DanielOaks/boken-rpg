@@ -354,7 +354,28 @@ function generateMap(e, regionName, place) {
                 // console.log('place is:', x, y, 'or', x + offsetX, y + offsetY, 'or', mapPlaceWidth * (x + offsetX) + mapWSpace * Math.max(0, x + offsetX - 1), mapPlaceHeight * (y + offsetY) + mapHSpace * Math.max(0, y + offsetY - 1))
             }
 
-            roundedRect(ctx, mapPlaceWidth * (x + offsetX) + mapWSpace * (x + offsetX), mapPlaceHeight * (y + offsetY) + mapHSpace * (y + offsetY), mapPlaceWidth, mapPlaceHeight, 10)
+            const drawPlaceW = mapPlaceWidth * (x + offsetX) + mapWSpace * (x + offsetX),
+                drawPlaceH = mapPlaceHeight * (y + offsetY) + mapHSpace * (y + offsetY)
+
+            roundedRect(ctx, drawPlaceW, drawPlaceH, mapPlaceWidth, mapPlaceHeight, 10)
+
+            ctx.fillStyle = '#eee'
+            ctx.font = '13px Arial'
+            ctx.textAlign = 'center'
+            ctx.textBaseline = 'middle'
+
+            var text = []
+
+            if (spaceAttributes.error) {
+                text.push('error')
+            }
+            if (spaceAttributes.character) {
+                text.push('char')
+            }
+
+            if (text !== []) {
+                ctx.fillText(text.join(','), drawPlaceW + mapPlaceWidth / 2, drawPlaceH + mapPlaceHeight / 2)
+            }
         }
     }
 
