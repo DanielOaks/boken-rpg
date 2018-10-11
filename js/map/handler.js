@@ -89,6 +89,8 @@ export function setup(e) {
             }
         }
 
+        generateMap(e, currentRegion, currentPlace)
+
         if (enteringRegion) {
             // e.Gui.rContent.innerText = 
             e.Gui.rContent.innerHTML = md.render(`Entered region **` + region.name + '->' + currentPlace + '**\n\n' + place.desc)
@@ -100,11 +102,15 @@ export function setup(e) {
     e.Events.addAllButtonHandler(mapHandler)
     e.Events.addHandler('mapStart', mapHandler)
 
-    console.log('region map generation', regions.troto)
-    generateMap(regions.troto)
+    e.currentSampledMap = ''
+
+    //TODO(dan): make the default region+place somewhere more appropriate?
+    var regionName = e.Data.get('region', 'troto')
+    var place = e.Data.get('place', 'entrance')
+    generateMap(e, regionName, place)
 }
 
-function generateMap(region) {
+function generateMap(e, regionName, place) {
     var mapAttributes = []
     var minX = 0,
         maxX = 0,
@@ -112,8 +118,15 @@ function generateMap(region) {
         maxY = 0
     var searchedPlaces = {}
 
-    var defaultPlace = region.places[region.defaultPlace]
+    var region = regions[regionName]
+    if (region === undefined) {
+        console.log('ERROR: could not find region', regionName, 'for map generation')
+        return null
+    }
+
+    var defaultPlace = region.places[place]
     if (defaultPlace === null) {
+        console.log('ERROR: could not find place', place, 'on region', regionName, 'for map generation')
         return null
     }
 
@@ -224,27 +237,47 @@ function generateMap(region) {
     }
 
     // make text representation of map
-    var mapText = ''
+    var samplingMapText = '' // data representation of the map for comparison purposes
+    var graphicalMapText = '' // nice visual representation of the map for the console
     for (var y = minY; y <= maxY; y++) {
         for (var x = minX; x <= maxX; x++) {
+            if (spaceAttributes === undefined) {
+                samplingMapText += '-'
+            } else {
+                samplingMapText += spaceAttributes.count.toString()
+                if (spaceAttributes.error) {
+                    samplingMapText += 'e'
+                }
+                if (spaceAttributes.character) {
+                    samplingMapText += 'c'
+                }
+            }
+
             var spaceAttributes = mapAttributes[x][y]
             if (x == 0 && y == 0) {
-                mapText += '0'
+                graphicalMapText += '0'
             } else if (spaceAttributes === undefined || spaceAttributes.count === 0) {
-                mapText += ' '
+                graphicalMapText += ' '
             } else if (spaceAttributes.count === 1) {
                 if (spaceAttributes.error) {
-                    mapText += 'e'
+                    graphicalMapText += 'e'
                 } else if (spaceAttributes.character) {
-                    mapText += 'c'
+                    graphicalMapText += 'c'
                 } else {
-                    mapText += 'x'
+                    graphicalMapText += 'x'
                 }
             } else {
-                mapText += spaceAttributes.count.toString()
+                graphicalMapText += spaceAttributes.count.toString()
             }
         }
-        mapText += '\n'
+        samplingMapText += '\n'
+        graphicalMapText += '\n'
     }
-    console.log(mapText)
+    console.log(graphicalMapText)
+    if (samplingMapText !== e.currentSampledMap) {
+        console.log('map changed, redrawing')
+        e.currentSampledMap = samplingMapText
+    } else {
+        console.log('map is the same')
+    }
 }
