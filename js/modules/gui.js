@@ -97,4 +97,8 @@ export class GuiManager {
         console.log('ERROR: tried to find free control button but could not find one')
         return null
     }
+
+    controlButtonsExist() {
+        return 0 < this.currentButtons.length
+    }
 }

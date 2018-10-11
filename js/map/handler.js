@@ -70,7 +70,7 @@ export function setup(e) {
 
         // if we're moving between regions, move to the new one
         //TODO(dan): Click buttons to go to external places if that's being done, etc
-        if (!enteringRegion) {
+        if (!enteringRegion && event.startsWith('btn ')) {
             var pressedBtn = event.substr(4)
             var direction = buttonToDirection[pressedBtn]
             var newPlace = place.links[direction]
