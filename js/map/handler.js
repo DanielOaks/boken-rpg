@@ -111,11 +111,6 @@ export function setup(e) {
     e.currentSampledMap = ''
     e.regionMapElement = document.getElementById('region-map')
     e.currentMapCanvasElement = null
-
-    //TODO(dan): put the default region+place strings somewhere more appropriate?
-    var regionName = e.Data.get('region', 'troto')
-    var place = e.Data.get('place', 'castleCourtyard')
-    generateMap(e, regionName, place)
 }
 
 function generateMap(e, regionName, place) {
