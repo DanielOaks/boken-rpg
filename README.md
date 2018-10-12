@@ -1,5 +1,5 @@
 # Boken RPG Engine
-This is a fun web RPG engine, written by Daniel Oaks. Developed solely in my spare time and for the purposes of trying to actually build a working game engine from scratch. Hopefully at some point it'll be usable and actually run how I want it to~
+This is a little web RPG engine. Developed solely in my spare time and for the purposes of trying to actually build a working game engine from scratch. Hopefully at some point it'll be usable for a real project~
 
 This engine isn't bundling files with WebPack or doing any post-processing apart from using [Compass](http://compass-style.org) to generate the CSS. Simply put, it uses native HTML-JS modules and loads each JS file that makes up the game separately. My intention is for someone to just be able to clone the repo, start a webserver on the root and get playing!
 
@@ -36,4 +36,4 @@ With Compass and the webserver running, you should be able to make any changes a
 
 
 ## Credits
-GUI inspired by (totally stolen from) [Fenoxo](https://www.fenoxo.com) \[NSFW\].
+Lots of the GUI and operation of the engine is inspired by (totally stolen from) [Fenoxo](https://www.fenoxo.com) \[NSFW\].
