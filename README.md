@@ -6,6 +6,12 @@ This engine isn't bundling files with WebPack or doing any post-processing apart
 I'm not sure exactly what my plans on this are. I have an RPG in mind that I'm slowly building up along with the engine, but the intention is to allow people to without too much fuss use this for their own games too. We'll see how well that actually goes in practice!
 
 
+## Compatibility
+This engine is unabashedly compatible with really quite new stuff only. If you're not running an up-to-date browser that supports all the latest JS stuff, you likely won't be able to play this.
+
+In addition, mobile is difficult. While the engine can do mobile fine, the control system isn't amazing for use with phones. If I can add compatibility later using media-queries then awesome, but I'm not losing sleep over not being able to play the game on your phone right now.
+
+
 ## Playing
 To play this, all you need to do is:
 
