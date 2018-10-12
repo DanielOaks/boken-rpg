@@ -7,6 +7,7 @@ import * as data from './data.js'
 import * as events from './events.js'
 import * as buttons from './buttons.js'
 import * as gui from './gui.js'
+import * as r from '../map/regions.js'
 
 /** GameEngine stores game state and controls everything. */
 export class GameEngine {
@@ -35,7 +36,26 @@ export class GameEngine {
         this.enteringRegion = true
         this.Data.set('region', region)
         this.Data.set('place', place)
+        this.setRegionNames(region)
         this.state = 'map' //TODO(dan): maybe required, maybe not? make optional eventually
+    }
+
+    /** Sets the region (and optionally place) name.
+     * @param {string} region - Region that we're in.
+     * @param {string} [place] - Place name.
+     */
+    setRegionNames(regionName, place) {
+        if (regionName == undefined) {
+            this.Gui.rRegionName.innerHTML = '&nbsp;'
+        } else {
+            var region = r.regions[regionName]
+            if (region !== undefined) {
+                this.Gui.rRegionName.innerText = region.name
+            }
+        }
+        if (place !== undefined) {
+            this.Gui.rPlaceName.innerText = place
+        }
     }
 
     // here be convenience functions
