@@ -43,6 +43,62 @@ export class GameEngine {
         this.sceneButtons = {}
     }
 
+    advanceTime(details) {
+        // we compose the incoming details to minutes, and then from minutes back to days/etc
+        var minutes = 0
+
+        // convert incoming to minutes
+        if (details.minutes !== undefined) {
+            minutes += details.minutes
+        }
+        if (details.hours !== undefined) {
+            minutes += details.hours * 60
+        }
+        if (details.days !== undefined) {
+            minutes += details.days * 24 * 60
+        }
+
+        // get current leftover minutes from data
+        var spareMinutes = this.Data.get('time.minutes', 0)
+        minutes += spareMinutes
+
+        // advance days
+        var days = this.Data.get('time.days', 0)
+        while (24 * 60 <= minutes) {
+            minutes -= 24 * 60
+            days += 1
+        }
+
+        // store new time
+        this.Data.set('time.days', days)
+        this.Data.set('time.minutes', minutes)
+    }
+
+    getCurrentTime() {
+        const days = this.Data.get('time.days', 0)
+        var hours = 0
+        var minutes = this.Data.get('time.minutes', 0)
+
+        while (60 <= minutes) {
+            minutes -= 60
+            hours += 1
+        }
+
+        return {
+            days: days,
+            hours: hours,
+            minutes: minutes,
+            totalMinutes: minutes + hours * 60,
+            timecode: ('00' + hours.toString()).slice(-2) + ':' + ('00' + Math.floor(minutes).toString()).slice(-2),
+        }
+    }
+
+    showTime() {
+        var currentTime = this.getCurrentTime()
+        this.Gui.rDay.innerText = currentTime.days.toString()
+        this.Gui.rTime.innerText = currentTime.timecode
+    }
+
     // here be script convenience functions
 
     /** Returns the player's name. */

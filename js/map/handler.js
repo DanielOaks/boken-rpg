@@ -68,6 +68,12 @@ export function setup(e) {
             return
         }
 
+        if (enteringRegion) {
+            e.advanceTime({
+                minutes: 2.3,
+            })
+        }
+
         // if we're moving between regions, move to the new one
         //TODO(dan): Click buttons to go to external places if that's being done, etc
         if (!enteringRegion && event.startsWith('btn ')) {
@@ -85,6 +91,11 @@ export function setup(e) {
             }
             e.Data.set('place', newPlace)
             currentPlace = newPlace
+
+            // assume travelling takes time
+            e.advanceTime({
+                minutes: 1.7,
+            })
         }
 
         // kill all existing buttons
@@ -113,6 +124,8 @@ export function setup(e) {
         buttons.updateButtonHoverInfo()
 
         generateMap(e, currentRegion, currentPlace)
+
+        e.showTime()
 
         if (enteringRegion) {
             // e.Gui.rContent.innerText = 

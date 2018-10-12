@@ -31,10 +31,10 @@ export class GuiManager {
     blankScreen() {
         this.rPlayerName.innerHTML = '&nbsp;'
         this.rContent.innerHTML = '&nbsp;'
-        this.rDay.innerText = '0'
+        this.rDay.innerText = '-'
         this.rPlaceName.innerText = ''
         this.rRegionName.innerHTML = '&nbsp;'
-        this.rTime.innerText = '00:00'
+        this.rTime.innerText = '--:--'
         for (var i = 0, len = this.rBars.length; i < len; i++) {
             this.rBars[i].style = 'background-position-x: calc(100% - 100% * (0 / 100));'
         }

@@ -114,6 +114,10 @@ Yourself and Belea have known each other since you were young, and have spent ma
 
 You find yourself standing just outside the door to Belea's room, having asked you to come see her.`)
                 e.Gui.addButton('1', 'Continue')
+                e.advanceTime({
+                    hours: 8,
+                })
+                e.showTime()
             } else if (event == 'btn 2') {
                 doIntro(e)
             }

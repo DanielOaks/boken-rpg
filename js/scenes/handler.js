@@ -72,10 +72,16 @@ function processPage(e, scene, pageNumber) {
     e.Gui.wipeControlButtons()
     e.wipeSceneButtons()
 
+    // get existing time for comparison later
+    const oldTime = Math.floor(e.getCurrentTime().totalMinutes)
+
     // run page
+    var pageContent = {}
     if (pageNumber < scene.pages.length) {
-        var pageContent = scene.pages[pageNumber]
+        pageContent = scene.pages[pageNumber]
         e.Gui.rContent.innerHTML = md.render(pageContent)
+    } else {
+        console.log('ERROR: scene is not valid:', scene, pageNumber)
     }
 
     if (scene.pages.length <= pageNumber) {
@@ -87,6 +93,27 @@ function processPage(e, scene, pageNumber) {
         // if no buttons loaded, just add a Continue button
         e.Gui.addButton('1', 'Continue')
     }
+
+    // update time if page doesn't explicitly say not to
+    if (e.state == 'map') {
+        e.advanceTime({
+            minutes: 2.4,
+        })
+    } else {
+        const newTime = Math.floor(e.getCurrentTime().totalMinutes)
+        if ((!pageContent.dontAdvanceTime) && oldTime == newTime) {
+            if (pageContent.duration) {
+                e.advanceTime(pageContent.duration)
+            } else {
+                e.advanceTime({
+                    minutes: 6.7, // assume that default, page takes like 6-7 mins?
+                })
+            }
+        }
+    }
+
+    // show new time
+    e.showTime()
 
     // update button hover information
     buttons.updateButtonHoverInfo()
