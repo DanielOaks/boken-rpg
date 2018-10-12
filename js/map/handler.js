@@ -110,6 +110,9 @@ export function setup(e) {
             }
         }
 
+        // load time waiting button
+        e.Gui.addButton('t', 'Wait')
+
         // load scene buttons
         if (place.scenes !== undefined) {
             for (const scene of place.scenes) {

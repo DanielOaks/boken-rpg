@@ -3,6 +3,7 @@ import * as engine from './modules/engine.js'
 import * as intro from './scenes/intro.js'
 import * as sceneHandler from './scenes/handler.js'
 import * as mapHandler from './map/handler.js'
+import * as waitHandler from './misc/waitHandler.js'
 
 var e = new engine.GameEngine()
 console.log('engine is', e)
@@ -16,6 +17,7 @@ Zepto(function ($) {
     e.init()
     mapHandler.setup(e)
     sceneHandler.setup(e)
+    waitHandler.setup(e)
     intro.setup(e)
     intro.start(e)
 })
