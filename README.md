@@ -42,4 +42,4 @@ With Compass and the webserver running, you should be able to make any changes a
 
 
 ## Credits
-Lots of the GUI and operation of the engine is inspired by (totally stolen from) [Fenoxo](https://www.fenoxo.com) \[NSFW\].
+Lots of the GUI and gameplay is inspired by (totally nicked from) [Fenoxo](https://www.fenoxo.com) \[NSFW\].
