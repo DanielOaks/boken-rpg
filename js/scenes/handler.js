@@ -1,3 +1,4 @@
+import * as buttons from '../modules/buttons.js'
 import * as s from './scenes.js'
 
 var md = window.markdownit()
@@ -86,4 +87,7 @@ function processPage(e, scene, pageNumber) {
         // if no buttons loaded, just add a Continue button
         e.Gui.addButton('1', 'Continue')
     }
+
+    // update button hover information
+    buttons.updateButtonHoverInfo()
 }
