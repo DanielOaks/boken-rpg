@@ -114,10 +114,6 @@ Yourself and Belea have known each other since you were young, and have spent ma
 
 You find yourself standing just outside the door to Belea's room, having asked you to come see her.`)
                 e.Gui.addButton('1', 'Continue')
-                e.advanceTime({
-                    hours: 8,
-                })
-                e.showTime()
             } else if (event == 'btn 2') {
                 doIntro(e)
             }
@@ -180,6 +176,11 @@ You shortly take your leave, stepping out of her room, and vacating the castle i
             }
             e.Gui.addButton('1', 'Continue')
         } else if (currentIntroPage == 5) {
+            e.advanceTime({
+                hours: 8,
+            })
+            e.showTime()
+
             e.enterNewRegion('troto', 'castleInnerEntrance')
             e.Events.dispatch('mapStart')
         } else {
