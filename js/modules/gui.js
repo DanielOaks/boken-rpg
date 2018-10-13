@@ -25,6 +25,8 @@ export class GuiManager {
         this.rPlaceName = document.querySelector('#main .left-pane .main-info .place .description')
         this.rRegionName = document.querySelector('#main .left-pane .main-info .region-name')
         this.rTime = document.querySelector('#main .left-pane .timeholder .time .value')
+        this.rCurrency = document.querySelector('#main .right-pane .advancement .currency .value')
+        this.rLevel = document.querySelector('#main .right-pane .advancement .level .value')
     }
 
     /** Blanks the whole screen and interface. */
@@ -41,6 +43,8 @@ export class GuiManager {
         for (var i = 0, len = this.rBarValues.length; i < len; i++) {
             this.rBarValues[i].innerText = '0'
         }
+        this.rCurrency.innerText = '0'
+        this.rLevel.innerText = '0'
         this.wipeControlButtons()
         buttons.updateButtonHoverInfo()
     }
