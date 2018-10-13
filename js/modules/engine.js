@@ -7,6 +7,7 @@ import * as data from './data.js'
 import * as events from './events.js'
 import * as buttons from './buttons.js'
 import * as gui from './gui.js'
+import * as contentPages from '../misc/contentPages.js'
 import * as r from '../map/regions.js'
 
 /** GameEngine stores game state and controls everything. */
@@ -16,6 +17,7 @@ export class GameEngine {
         this.Buttons = new buttons.ButtonManager(this.Events)
         this.Data = new data.Datastore()
         this.Gui = new gui.GuiManager()
+        this.contentPages = new contentPages.ContentPageStore(this)
         this.state = 'start'
     }
 

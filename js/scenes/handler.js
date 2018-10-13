@@ -33,7 +33,7 @@ export function setup(e) {
         e.Data.set('scene.name', sceneToLoad)
         e.Data.set('scene.page', 0)
 
-        e.Gui.rContent.innerText = "We're running scene " + sceneToLoad + ", page 0, but there's no content for it yet"
+        e.contentPages.addNewPageText("We're running scene " + sceneToLoad + ", page 0, but there's no content for it yet")
 
         processPage(e, scene, 0)
 
@@ -56,7 +56,7 @@ export function setup(e) {
             return false
         }
 
-        e.Gui.rContent.innerText = "We're in scene " + currentSceneName + ", page " + currentScenePage + ", but there's no content for it yet"
+        e.contentPages.addNewPageText("We're in scene " + currentSceneName + ", page " + currentScenePage + ", but there's no content for it yet")
 
         processPage(e, scene, currentScenePage)
     }
@@ -79,7 +79,7 @@ function processPage(e, scene, pageNumber) {
     var pageContent = {}
     if (pageNumber < scene.pages.length) {
         pageContent = scene.pages[pageNumber]
-        e.Gui.rContent.innerHTML = md.render(pageContent)
+        e.contentPages.replaceLatestPage(md.render(pageContent))
     } else {
         console.log('ERROR: scene is not valid:', scene, pageNumber)
     }

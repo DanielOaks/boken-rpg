@@ -11,11 +11,13 @@ const controlButtonOrder = ['1', '2', '3', '4', '5', 'q', 'e', 'r', 't', 'f', 'g
 export class GuiManager {
     constructor() {
         this.currentButtons = {}
-        this.contentHistory = []
     }
 
     /** Initializes the GUI selectors. */
     init() {
+        this.rContentPrev = document.querySelector('#main .left-pane .buttons [data-btn="content-prev"]')
+        this.rContentNext = document.querySelector('#main .left-pane .buttons [data-btn="content-next"]')
+
         this.rBars = document.querySelectorAll('#main .right-pane .main-info .bar')
         this.rBarValues = document.querySelectorAll('#main .right-pane .main-info .bar .value')
         this.rPlayerName = document.querySelector('#main .right-pane .main-info .character-name')
@@ -51,7 +53,6 @@ export class GuiManager {
 
     /** Wipes all displayed (and stored) game content. */
     wipeContent() {
-        this.contentHistory = []
         this.rContent.innerHTML = '&nbsp'
     }
 

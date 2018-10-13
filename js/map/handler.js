@@ -54,7 +54,7 @@ export function setup(e) {
         // load region
         var region = regions[currentRegion]
         if (region === undefined) {
-            e.Gui.rContent.innerText = `Could not load region ` + currentRegion
+            e.contentPages.addNewPageText(`Could not load region ` + currentRegion)
             return
         }
 
@@ -64,7 +64,7 @@ export function setup(e) {
         }
         var place = region.places[currentPlace]
         if (place === undefined) {
-            e.Gui.rContent.innerText = `Could not load place ` + currentRegion + '->' + currentPlace
+            e.contentPages.addNewPageText(`Could not load place ` + currentRegion + '->' + currentPlace)
             return
         }
 
@@ -86,7 +86,7 @@ export function setup(e) {
             }
             place = region.places[newPlace]
             if (place === undefined) {
-                e.Gui.rContent.innerText = `Could not load place ` + currentRegion + '->' + currentPlace
+                e.contentPages.addNewPageText(`Could not load place ` + currentRegion + '->' + currentPlace)
                 return
             }
             e.Data.set('place', newPlace)
@@ -132,10 +132,10 @@ export function setup(e) {
 
         if (enteringRegion) {
             // e.Gui.rContent.innerText = 
-            e.Gui.rContent.innerHTML = md.render(`Entered region **` + region.name + '->' + currentPlace + '**\n\n' + place.desc)
+            e.contentPages.addNewPage(md.render(`Entered region **` + region.name + '->' + currentPlace + '**\n\n' + place.desc))
             return
         }
-        e.Gui.rContent.innerHTML = md.render(`Travelling region **` + region.name + '->' + currentPlace + '**\n\n' + place.desc)
+        e.contentPages.addNewPage(md.render(`Travelling region **` + region.name + '->' + currentPlace + '**\n\n' + place.desc))
     }
 
     e.Events.addAllButtonHandler(mapHandler)

@@ -104,7 +104,7 @@ export function setup(e) {
             e.Gui.addButton('2', 'Go Back', 'Go Back', 'Create a new character')
         } else if (currentIntroPage == 1) {
             if (event == 'btn 1') {
-                e.Gui.rContent.innerHTML = md.render(`
+                e.contentPages.addNewPage(md.render(`
 You're a close friend of one Princess Belea Canson. The ruler-to-be of this fine settlement lives in a castle, but not one that's too large or gaudy. Really, 
 "castle" seems like a bit of a stretch... at least compared to those that exist in other parts.
 
@@ -112,13 +112,13 @@ The Canson family – or at least the offshoot of it that lives here – is an
 
 Yourself and Belea have known each other since you were young, and have spent many years in the same schools and neighbourhood. And with the two of you finally getting to that age, it's time for each of you to find your paths before she can take over the throne.
 
-You find yourself standing just outside the door to Belea's room, having asked you to come see her.`)
+You find yourself standing just outside the door to Belea's room, having asked you to come see her.`))
                 e.Gui.addButton('1', 'Continue')
             } else if (event == 'btn 2') {
                 doIntro(e)
             }
         } else if (currentIntroPage == 2) {
-            e.Gui.rContent.innerHTML = md.render(`
+            e.contentPages.addNewPage(md.render(`
 You give the door a few knocks. A startled noise comes from the other side, with the door opening shortly after. Poking her head out, you see the princess looking to you with a small, troubled smile on her face.
 
 "Ah, ` + e.pName() + `, thank you for coming," she says, opening the door and inviting you inside.
@@ -129,10 +129,10 @@ The two of you sit on her bed, feeling the fairly-plush blankets underneath you.
 
 Those two green eyes look to you, the princess seemingly studying your own closely for a few moments.
 
-"Just like we talked about, I chose you as one of my assistants – my closest, really… The same as I'm being tested and having to prove myself, you need to do the same," she says, stepping up from her bed and glancing to the window.`)
+"Just like we talked about, I chose you as one of my assistants – my closest, really… The same as I'm being tested and having to prove myself, you need to do the same," she says, stepping up from her bed and glancing to the window.`))
             e.Gui.addButton('1', 'Continue')
         } else if (currentIntroPage == 3) {
-            e.Gui.rContent.innerHTML = md.render(`
+            e.contentPages.addNewPage(md.render(`
 "I already have those helping me around the castle, those who will assist with my schedule and arrange diplomatic visits."
 
 "What I lack – what **we** lack – is someone who's willing to go out there into the world and spread our message. Or at least work to prevent this war that seems almost inevitable. If the world is plunged into chaos, there's no doubt that we will be as well," she says, turning to look towards you.
@@ -141,13 +141,13 @@ Those two green eyes look to you, the princess seemingly studying your own close
 
 "I know it's a big request, however… it's what we must do. Do our best to prevent another large-scale conflict, myself and my family from here, and you from out there."
 
-"You can trust that I'll do my best from where I am. Can I count on you?" she asks, extending a hand and a smile.`)
+"You can trust that I'll do my best from where I am. Can I count on you?" she asks, extending a hand and a smile.`))
             e.Gui.addButton('1', 'Yes', 'Yes', `You're with the princess`)
             e.Gui.addButton('2', 'No', 'No', `The princess is on her own`)
         } else if (currentIntroPage == 4) {
             if (event == 'btn 1') {
                 e.Data.set('princess.offerAccepted', true)
-                e.Gui.rContent.innerHTML = md.render(`
+                e.contentPages.addNewPage(md.render(`
 That smile on her face gets wider as she shakes your hand.
 
 "We're a team, always. Now, let's go through some details…" she says, hopping back on the bed with you.
@@ -160,10 +160,10 @@ She covers the three other kingdoms: **Alta**, the largest, to the north; **Cat
 
 etc etc. Catal's on the coast, and Netto's fairly close to theirs.
 
-She wishes you good luck and sends you on your way and out of the catle, etc etc long scene to be written more.`)
+She wishes you good luck and sends you on your way and out of the catle, etc etc long scene to be written more.`))
             } else {
                 e.Data.set('princess.offerAccepted', false)
-                e.Gui.rContent.innerHTML = md.render(`
+                e.contentPages.addNewPage(md.render(`
 That smile on her face crumbles as you refuse, that hand dropping back to her side.
 
 "Oh. Well… alrighty then, guess I'm alone on this," she says, letting out a little chuckle as she turns back to the window.
@@ -172,7 +172,7 @@ That smile on her face crumbles as you refuse, that hand dropping back to her si
 
 "Goodbye, ` + e.pName() + `."
 
-You shortly take your leave, stepping out of her room, and vacating the castle in a hurry before any of them figure out how you've responded to your friend's offer.`)
+You shortly take your leave, stepping out of her room, and vacating the castle in a hurry before any of them figure out how you've responded to your friend's offer.`))
             }
             e.Gui.addButton('1', 'Continue')
         } else if (currentIntroPage == 5) {
@@ -184,7 +184,7 @@ You shortly take your leave, stepping out of her room, and vacating the castle i
             e.enterNewRegion('troto', 'castleInnerEntrance')
             e.Events.dispatch('mapStart')
         } else {
-            e.Gui.rContent.innerText = 'Here goes intro page ' + currentIntroPage + ' content, but we have none yet!'
+            e.contentPages.addNewPage('Here goes intro page ' + currentIntroPage + ' content, but we have none yet!')
         }
 
         buttons.updateButtonHoverInfo()

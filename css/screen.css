@@ -1379,7 +1379,7 @@ html, body { height: 100%; background: #77a; font-family: "Open Sans", sans-seri
 .three-pane .left-pane > .main-info > .buttons > .button.active, .three-pane .right-pane > .main-info > .buttons > .button.active { opacity: 1; cursor: pointer; }
 .three-pane .left-pane > .main-info > .buttons > .profile, .three-pane .right-pane > .main-info > .buttons > .profile { grid-row: 1/3; grid-column: 4/end; font-size: 3em; padding-top: 0.3em; }
 .three-pane .left-pane > .buttons, .three-pane .right-pane > .buttons { flex: 0 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; }
-.three-pane .left-pane > .buttons .nbutton, .three-pane .right-pane > .buttons .nbutton { display: block; padding: 0.5em 0; width: calc(50% - 0.25em); background: #525280; margin-top: 0.5em; border-radius: 0.5em; color: #fff; text-align: center; text-decoration: none; opacity: 0.4; cursor: default; }
+.three-pane .left-pane > .buttons .nbutton, .three-pane .right-pane > .buttons .nbutton { display: block; padding: 0.5em 0; width: calc(50% - 0.25em); background: #525280; margin-top: 0.5em; border-radius: 0.5em; color: #fff; text-align: center; text-decoration: none; opacity: 0.4; cursor: default; user-select: none; }
 .three-pane .left-pane > .buttons .nbutton.active, .three-pane .right-pane > .buttons .nbutton.active { opacity: 1; cursor: pointer; }
 .three-pane .center-pane { display: flex; flex-direction: column; width: 100%; flex: 1 1 auto; padding: 0 0.5em; }
 .three-pane .center-pane > .content { flex: 1 1 auto; padding: 1em 0.7em; overflow-y: auto; line-height: 1.15; font-size: 1.1em; color: rgba(255, 255, 255, 0.95); }
