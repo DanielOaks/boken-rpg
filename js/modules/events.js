@@ -95,14 +95,35 @@ export class EventQueue {
                     break
                 }
 
+                // call handler for new event
                 var handlers = this.handlers[newEvent]
                 if (handlers === undefined) {
                     continue
                 }
 
-                for (var i = 0, len = handlers.length; i < len; i++) {
-                    // console.log('calling handler', handlers[i], 'with event', newEvent)
-                    var returnVal = handlers[i](newEvent)
+                for (const handler of handlers) {
+                    // console.log('calling handler', handler, 'with event', newEvent)
+                    var returnVal = handler(newEvent)
+
+                    if (returnVal === true) {
+                        break
+                    }
+                }
+
+                // call handlers for * event
+                var allEventHandlers = this.handlers['*']
+                if (allEventHandlers === undefined) {
+                    continue
+                }
+
+                for (const handler of allEventHandlers) {
+                    // check if handler's already been called
+                    if (handlers.includes(handler)) {
+                        continue
+                    }
+
+                    // console.log('calling handler', handler, 'with event', newEvent)
+                    var returnVal = handler(newEvent)
 
                     if (returnVal === true) {
                         break
