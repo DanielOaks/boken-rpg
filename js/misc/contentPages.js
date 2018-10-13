@@ -14,8 +14,14 @@ export function setup(e) {
         }
     }
 
+    function updatePageButtonsHandler(event) {
+        e.contentPages.updatePageButtons()
+    }
+
     e.Events.addHandler('btn content-prev', contentButtonHandler)
     e.Events.addHandler('btn content-next', contentButtonHandler)
+
+    e.Events.addHandler('*', updatePageButtonsHandler)
 }
 
 export class ContentPageStore {
@@ -49,20 +55,18 @@ export class ContentPageStore {
     }
 
     showPreviousPage() {
-        console.log('prev:', this._contentHistory, this._currentPageIndex, this._contentHistory.length - 1)
+        // console.log('prev:', this._contentHistory, this._currentPageIndex, this._contentHistory.length - 1)
         if (this._currentPageIndex < this._contentHistory.length - 1) {
             this._currentPageIndex += 1
             this._showContentHTML(this._contentHistory[this._currentPageIndex])
-            this.updatePageButtons()
         }
     }
 
     showNextPage() {
-        console.log('next:', this._currentPageIndex, this._contentHistory.length)
+        // console.log('next:', this._currentPageIndex, this._contentHistory.length)
         if (0 < this._currentPageIndex) {
             this._currentPageIndex -= 1
             this._showContentHTML(this._contentHistory[this._currentPageIndex])
-            this.updatePageButtons()
         }
     }
 

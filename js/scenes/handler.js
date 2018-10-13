@@ -56,6 +56,18 @@ export function setup(e) {
             return false
         }
 
+        if (scene.pages.length <= currentScenePage) {
+            // wipe buttons in preparation for map start
+            e.Gui.wipeControlButtons()
+            e.wipeSceneButtons()
+
+            // scene is finished, return to map
+            //TODO(dan): maybe save existing state and restore to it instead of just going to map?
+            e.state = 'map'
+            e.Events.dispatch('mapStart')
+            return true
+        }
+
         e.contentPages.addNewPageText("We're in scene " + currentSceneName + ", page " + currentScenePage + ", but there's no content for it yet")
 
         processPage(e, scene, currentScenePage)
@@ -84,12 +96,7 @@ function processPage(e, scene, pageNumber) {
         console.log('ERROR: scene is not valid:', scene, pageNumber)
     }
 
-    if (scene.pages.length <= pageNumber) {
-        // scene is finished, return to map
-        //TODO(dan): maybe save existing state and restore to it instead of just going to map?
-        e.state = 'map'
-        e.Events.dispatch('mapStart')
-    } else if (!e.Gui.controlButtonsExist()) {
+    if (!e.Gui.controlButtonsExist()) {
         // if no buttons loaded, just add a Continue button
         e.Gui.addButton('1', 'Continue')
     }
