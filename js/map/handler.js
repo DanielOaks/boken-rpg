@@ -130,12 +130,16 @@ export function setup(e) {
 
         e.showTime()
 
-        if (enteringRegion) {
-            // e.Gui.rContent.innerText = 
-            e.contentPages.addNewPage(md.render(`Entered region **` + region.name + '->' + currentPlace + '**\n\n' + place.desc))
-            return
+        if (place.desc) {
+            e.contentPages.addNewPage(md.render(place.desc))
+        } else {
+            if (enteringRegion) {
+                // e.Gui.rContent.innerText = 
+                e.contentPages.addNewPage(md.render(`Entered region **` + region.name + '->' + currentPlace + '**\n\nNo Description'))
+                return
+            }
+            e.contentPages.addNewPage(md.render(`Travelling region **` + region.name + '->' + currentPlace + '**\n\nNo Description'))
         }
-        e.contentPages.addNewPage(md.render(`Travelling region **` + region.name + '->' + currentPlace + '**\n\n' + place.desc))
     }
 
     e.Events.addAllButtonHandler(mapHandler)

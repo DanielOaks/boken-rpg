@@ -3,7 +3,7 @@ export var region = {
     'defaultPlace': 'entrance',
     'places': {
         'castleInnerEntrance': {
-            'desc': `.`,
+            'desc': undefined,
             'links': {
                 'n': '',
                 's': '',
@@ -12,7 +12,7 @@ export var region = {
             },
         },
         'castleCourtyard': {
-            'desc': `.`,
+            'desc': undefined,
             'links': {
                 'n': 'castleCourtyard1',
                 's': 'castleCourtyard2',
@@ -21,7 +21,7 @@ export var region = {
             },
         },
         'castleCourtyard1': {
-            'desc': `.`,
+            'desc': undefined,
             'links': {
                 'n': '',
                 's': 'castleCourtyard',
@@ -30,7 +30,7 @@ export var region = {
             },
         },
         'castleCourtyard2': {
-            'desc': `.`,
+            'desc': undefined,
             'links': {
                 'n': 'castleCourtyard',
                 's': '',
@@ -54,7 +54,7 @@ export var region = {
             },
         },
         'town1': {
-            'desc': `.`,
+            'desc': undefined,
             'links': {
                 'n': 'townUpper1',
                 's': 'townLower1',
@@ -63,7 +63,7 @@ export var region = {
             },
         },
         'townUpper1': {
-            'desc': `.`,
+            'desc': undefined,
             'links': {
                 'n': '',
                 's': 'town1',
@@ -72,7 +72,7 @@ export var region = {
             },
         },
         'townUpper2': {
-            'desc': `.`,
+            'desc': undefined,
             'links': {
                 'n': 'townHouse2',
                 's': '',
@@ -81,7 +81,7 @@ export var region = {
             },
         },
         'townHouse1': {
-            'desc': `.`,
+            'desc': undefined,
             'links': {
                 'n': '',
                 's': '',
@@ -90,7 +90,7 @@ export var region = {
             },
         },
         'townHouse2': {
-            'desc': `.`,
+            'desc': undefined,
             'links': {
                 'n': '',
                 's': 'townUpper2',
@@ -99,7 +99,7 @@ export var region = {
             },
         },
         'entrance': {
-            'desc': `.`,
+            'desc': undefined,
             'links': {
                 'n': '',
                 's': '',
@@ -108,7 +108,7 @@ export var region = {
             },
         },
         // '': {
-        //     'desc': `.`,
+        //     'desc': undefined,
         //     'links': {
         //         'n': '',
         //         's': '',
