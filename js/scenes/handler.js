@@ -132,20 +132,15 @@ function processPage(e, scene, pageNumber, sceneButtonPressed) {
         console.log('ERROR: scene is not valid:', scene, pageNumber)
     }
 
-    console.log('aight, page', pageNumber, 'and control buttons are', e.Gui.controlButtonsExist(), e.Gui.currentButtons)
     if (!e.Gui.controlButtonsExist()) {
         // if no buttons were added, just add a basic Continue button
         e.addSceneButton('', 'Continue')
     }
 
     // update time if page doesn't explicitly say not to
-    if (e.state == 'map') {
-        e.advanceTime({
-            minutes: 2.4,
-        })
-    } else {
-        const newTime = Math.floor(e.getCurrentTime().totalMinutes)
-        if ((!pageContent.dontAdvanceTime) && oldTime == newTime) {
+    const newTime = Math.floor(e.getCurrentTime().totalMinutes)
+    if (!(scene.noTimePasses || pageContent.dontAdvanceTime)) {
+        if (oldTime == newTime) {
             if (pageContent.duration) {
                 e.advanceTime(pageContent.duration)
             } else {

@@ -5,6 +5,7 @@ export var scenes = {
         'exitDuration': {
             'hours': 8,
         },
+        'noTimePasses': true,
         'pages': [
             `You're a close friend of one Princess Belea Canson. The ruler-to-be of this fine settlement lives in a castle, but not one that's too large or gaudy. Really, "castle" seems like a bit of a stretch... at least compared to those that exist in other parts.
             
