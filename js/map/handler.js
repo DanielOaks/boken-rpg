@@ -229,12 +229,6 @@ function generateMap(e, regionName, place) {
             if (linkName === undefined || linkName === '') {
                 continue
             }
-            var link = region.places[linkName]
-            if (link === undefined) {
-                //TODO(dan): add some error indication here
-                mapAttributes[x][y].error = true
-                continue
-            }
 
             // make new x and y
             var newX = x,
@@ -259,16 +253,6 @@ function generateMap(e, regionName, place) {
                 return
             }
 
-            var newDir = oppositeDirs[dir]
-
-            theseSearchables.push({
-                'name': linkName,
-                'link': link,
-                'entryDir': newDir,
-                'x': newX,
-                'y': newY,
-            })
-
             // add link info, do it so dupes aren't added
             var i1 = [x, y],
                 i2 = [newX, newY]
@@ -279,6 +263,26 @@ function generateMap(e, regionName, place) {
 
             const plSortKey = i1.join(',') + '.' + i2.join(',')
             placeLinks[plSortKey] = [i1, i2]
+
+            // evaluate the new place info
+            // do this after adding the link so that we can see *how* links are broken
+            var link = region.places[linkName]
+            if (link === undefined) {
+                //TODO(dan): add some error indication here
+                mapAttributes[x][y].error = true
+                continue
+            }
+
+            // add the info
+            var newDir = oppositeDirs[dir]
+
+            theseSearchables.push({
+                'name': linkName,
+                'link': link,
+                'entryDir': newDir,
+                'x': newX,
+                'y': newY,
+            })
         }
 
         return theseSearchables
