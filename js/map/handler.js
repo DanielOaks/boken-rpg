@@ -33,6 +33,8 @@ const mapPlaceHeight = 40
 const mapPlaceWidth = 40
 const mapHSpace = 20
 const mapWSpace = 20
+const mapLinkNL = 7
+const mapLinkLength = 13
 
 var imgErrorPattern
 
@@ -158,6 +160,7 @@ function generateMap(e, regionName, place) {
         maxX = 0,
         minY = 0,
         maxY = 0
+    var placeLinks = {}
     var searchedPlaces = {}
 
     var region = regions[regionName]
@@ -265,6 +268,17 @@ function generateMap(e, regionName, place) {
                 'x': newX,
                 'y': newY,
             })
+
+            // add link info, do it so dupes aren't added
+            var i1 = [x, y],
+                i2 = [newX, newY]
+
+            if (newX < x || newY < y) {
+                [i1, i2] = [i2, i1]
+            }
+
+            const plSortKey = i1.join(',') + '.' + i2.join(',')
+            placeLinks[plSortKey] = [i1, i2]
         }
 
         return theseSearchables
@@ -352,8 +366,7 @@ function generateMap(e, regionName, place) {
     const offsetX = Math.abs(minX)
     const offsetY = Math.abs(minY)
 
-    //TODO(dan): store connections between places and draw them on the canvas too
-
+    // draw places
     for (var y = minY; y <= maxY; y++) {
         for (var x = minX; x <= maxX; x++) {
             var spaceAttributes = mapAttributes[x][y]
@@ -399,6 +412,29 @@ function generateMap(e, regionName, place) {
             if (text !== []) {
                 ctx.fillText(text.join(','), drawPlaceW + mapPlaceWidth / 2, drawPlaceH + mapPlaceHeight / 2)
             }
+        }
+    }
+
+    // draw links between places
+    ctx.fillStyle = '#656494'
+    for (const [k, link] of Object.entries(placeLinks)) {
+        var x1 = link[0][0],
+            y1 = link[0][1],
+            x2 = link[1][0],
+            y2 = link[1][1]
+
+        if (y1 == y2) {
+            // horizontal
+            // 1 and 2 are sorted earlier by the insertion fn, so no sorting needed herer
+            const verticalMidStart = (mapPlaceHeight * (y1 + offsetY) + mapHSpace * (y1 + offsetY)) + mapPlaceHeight * 0.5 - mapLinkNL * 0.5
+            const horizontalMidStart = (mapPlaceWidth * (x1 + offsetX) + mapWSpace * (x1 + offsetX)) + mapPlaceWidth + mapHSpace * 0.5 - mapLinkLength * 0.5
+            roundedRect(ctx, horizontalMidStart, verticalMidStart, mapLinkLength, mapLinkNL, 3)
+        } else {
+            // vertical
+            // 1 and 2 are sorted earlier by the insertion fn, so no sorting needed herer
+            const verticalMidStart = (mapPlaceHeight * (y1 + offsetY) + mapHSpace * (y1 + offsetY)) + mapPlaceHeight + mapWSpace * 0.5 - mapLinkLength * 0.5
+            const horizontalMidStart = (mapPlaceWidth * (x1 + offsetX) + mapWSpace * (x1 + offsetX)) + mapPlaceWidth * 0.5 - mapLinkNL * 0.5
+            roundedRect(ctx, horizontalMidStart, verticalMidStart, mapLinkNL, mapLinkLength, 3)
         }
     }
 
