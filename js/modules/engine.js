@@ -69,9 +69,11 @@ export class GameEngine {
         this.sceneButtons = {}
     }
 
-    addSceneButton(btn, shortName, title, description) {
+    addSceneButton(buttonId, shortName, title, description) {
+        const btn = this.Gui.nextFreeControlButton()
+        // console.log('adding scene button', buttonId, shortName, 'as button', btn)
         this.Gui.addButton(btn, shortName, title, description)
-        this.sceneButtons[btn] = true
+        this.sceneButtons[btn] = buttonId
     }
 
     advanceTime(details) {

@@ -35,7 +35,7 @@ export function setup(e) {
 
         e.contentPages.addNewPageText("We're running scene " + sceneToLoad + ", page 0, but there's no content for it yet")
 
-        processPage(e, scene, 0)
+        processPage(e, scene, 0, '')
 
         // return true to stop sceneHandler from stomping and responding to the event as well
         return true
@@ -47,9 +47,11 @@ export function setup(e) {
         }
 
         // see if button is a current scene button, ignore if it isn't
+        var sceneButtonPressed = ''
         if (event.startsWith('btn ')) {
             const btn = event.substr(4)
-            if (e.sceneButtons[btn] === undefined) {
+            sceneButtonPressed = e.sceneButtons[btn]
+            if (sceneButtonPressed === undefined) {
                 return false
             }
         }
@@ -84,7 +86,7 @@ export function setup(e) {
 
         e.contentPages.addNewPageText("We're in scene " + currentSceneName + ", page " + currentScenePage + ", but there's no content for it yet")
 
-        processPage(e, scene, currentScenePage)
+        processPage(e, scene, currentScenePage, sceneButtonPressed)
     }
 
     e.Events.addAllButtonHandler(sceneStartHandler)
@@ -93,7 +95,7 @@ export function setup(e) {
     e.sceneButtons = {}
 }
 
-function processPage(e, scene, pageNumber) {
+function processPage(e, scene, pageNumber, sceneButtonPressed) {
     // wipe existing buttons
     e.Gui.wipeControlButtons()
     e.wipeSceneButtons()
@@ -111,8 +113,8 @@ function processPage(e, scene, pageNumber) {
     }
 
     if (!e.Gui.controlButtonsExist()) {
-        // if no buttons loaded, just add a Continue button
-        e.addSceneButton('1', 'Continue')
+        // if no buttons were added, just add a basic Continue button
+        e.addSceneButton('', 'Continue')
     }
 
     // update time if page doesn't explicitly say not to
