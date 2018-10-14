@@ -6,7 +6,7 @@ var scenes = s.scenes
 
 // generic scene handler
 export function setup(e) {
-    function sceneStartHandler(event) {
+    function sceneMapStartHandler(event) {
         if (e.state !== 'map') {
             return false
         }
@@ -20,14 +20,23 @@ export function setup(e) {
             return false
         }
 
+        startScene(sceneToLoad)
+
+        // return true to stop sceneHandler from stomping and responding to the event as well
+        return true
+    }
+
+    function sceneStartHandler(event) {
+        const sceneToLoad = e.Data.get('scene.name')
+        startScene(sceneToLoad)
+    }
+
+    function startScene(sceneToLoad) {
         var scene = scenes[sceneToLoad]
         if (scene === undefined) {
             console.log('ERROR: tried to load scene', sceneToLoad, 'but could not')
             return false
         }
-
-        // region and place info are stored on map mpve, so we'll be able to restore to them
-        // later upon scene exit \o/
 
         e.state = 'scene'
         e.Data.set('scene.name', sceneToLoad)
@@ -36,9 +45,6 @@ export function setup(e) {
         e.contentPages.addNewPageText("We're running scene " + sceneToLoad + ", page 0, but there's no content for it yet")
 
         processPage(e, scene, 0, '')
-
-        // return true to stop sceneHandler from stomping and responding to the event as well
-        return true
     }
 
     function sceneHandler(event) {
@@ -77,6 +83,11 @@ export function setup(e) {
                 e.enterNewRegion(scene.exitRegion, scene.exitPlace)
             }
 
+            // if scene has a specific amount of time to progress, do that
+            if (scene.exitDuration) {
+                e.advanceTime(scene.exitDuration)
+            }
+
             // scene is finished, return to map
             //TODO(dan): maybe save existing state and restore to it instead of just going to map?
             e.state = 'map'
@@ -89,8 +100,9 @@ export function setup(e) {
         processPage(e, scene, currentScenePage, sceneButtonPressed)
     }
 
-    e.Events.addAllButtonHandler(sceneStartHandler)
+    e.Events.addAllButtonHandler(sceneMapStartHandler)
     e.Events.addAllButtonHandler(sceneHandler)
+    e.Events.addHandler('sceneStart', sceneStartHandler)
 
     e.sceneButtons = {}
 }
@@ -107,11 +119,20 @@ function processPage(e, scene, pageNumber, sceneButtonPressed) {
     var pageContent = {}
     if (pageNumber < scene.pages.length) {
         pageContent = scene.pages[pageNumber]
-        e.contentPages.replaceLatestPage(md.render(pageContent))
+
+        // see if pageContent is a string or not?
+        if (typeof pageContent === 'string') {
+            e.parser.replaceLatestPage(pageContent)
+        } else if (typeof pageContent === 'function') {
+            pageContent(e, scene, pageNumber, sceneButtonPressed)
+        } else {
+            console.log('ERROR: type of pageContent', typeof pageContent, 'not supported:', pageContent, scene, pageNumber, sceneButtonPressed)
+        }
     } else {
         console.log('ERROR: scene is not valid:', scene, pageNumber)
     }
 
+    console.log('aight, page', pageNumber, 'and control buttons are', e.Gui.controlButtonsExist(), e.Gui.currentButtons)
     if (!e.Gui.controlButtonsExist()) {
         // if no buttons were added, just add a basic Continue button
         e.addSceneButton('', 'Continue')
@@ -134,9 +155,6 @@ function processPage(e, scene, pageNumber, sceneButtonPressed) {
             }
         }
     }
-
-    // show new time
-    e.showTime()
 
     // update button hover information
     buttons.updateButtonHoverInfo()

@@ -8,6 +8,7 @@ import * as events from './events.js'
 import * as buttons from './buttons.js'
 import * as gui from './gui.js'
 import * as contentPages from '../misc/contentPages.js'
+import * as sceneParser from '../misc/sceneParser.js';
 import * as r from '../map/regions.js'
 
 /** GameEngine stores game state and controls everything. */
@@ -18,6 +19,7 @@ export class GameEngine {
         this.Data = new data.Datastore()
         this.Gui = new gui.GuiManager()
         this.contentPages = new contentPages.ContentPageStore(this)
+        this.parser = new sceneParser.SceneParser(this)
         this.state = 'start'
     }
 
@@ -105,6 +107,9 @@ export class GameEngine {
         // store new time
         this.Data.set('time.days', days)
         this.Data.set('time.minutes', minutes)
+
+        // show new time
+        this._showTime()
     }
 
     getCurrentTime() {
@@ -126,7 +131,7 @@ export class GameEngine {
         }
     }
 
-    showTime() {
+    _showTime() {
         var currentTime = this.getCurrentTime()
         this.Gui.rDay.innerText = currentTime.days.toString()
         this.Gui.rTime.innerText = currentTime.timecode

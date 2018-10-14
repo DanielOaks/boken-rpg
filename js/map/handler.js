@@ -128,8 +128,6 @@ export function setup(e) {
 
         generateMap(e, currentRegion, currentPlace)
 
-        e.showTime()
-
         if (place.desc) {
             e.contentPages.addNewPage(md.render(place.desc))
         } else {

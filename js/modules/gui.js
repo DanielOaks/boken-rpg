@@ -104,6 +104,6 @@ export class GuiManager {
     }
 
     controlButtonsExist() {
-        return 0 < this.currentButtons.length
+        return 0 < Object.entries(this.currentButtons).length
     }
 }
