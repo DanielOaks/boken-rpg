@@ -65,6 +65,15 @@ export class GameEngine {
         this.mapSceneButtons = {}
     }
 
+    wipeSceneButtons() {
+        this.sceneButtons = {}
+    }
+
+    addSceneButton(btn, shortName, title, description) {
+        this.Gui.addButton(btn, shortName, title, description)
+        this.sceneButtons[btn] = true
+    }
+
     advanceTime(details) {
         // we compose the incoming details to minutes, and then from minutes back to days/etc
         var minutes = 0

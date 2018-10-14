@@ -45,6 +45,15 @@ export function setup(e) {
         if (e.state !== 'scene') {
             return false
         }
+
+        // see if button is a current scene button, ignore if it isn't
+        if (event.startsWith('btn ')) {
+            const btn = event.substr(4)
+            if (e.sceneButtons[btn] === undefined) {
+                return false
+            }
+        }
+
         var currentSceneName = e.Data.get('scene.name')
         var currentScenePage = e.Data.get('scene.page')
         currentScenePage += 1
@@ -81,13 +90,13 @@ export function setup(e) {
     e.Events.addAllButtonHandler(sceneStartHandler)
     e.Events.addAllButtonHandler(sceneHandler)
 
-    e.mapSceneButtons = {}
+    e.sceneButtons = {}
 }
 
 function processPage(e, scene, pageNumber) {
     // wipe existing buttons
     e.Gui.wipeControlButtons()
-    e.wipeMapSceneButtons()
+    e.wipeSceneButtons()
 
     // get existing time for comparison later
     const oldTime = Math.floor(e.getCurrentTime().totalMinutes)
@@ -103,7 +112,7 @@ function processPage(e, scene, pageNumber) {
 
     if (!e.Gui.controlButtonsExist()) {
         // if no buttons loaded, just add a Continue button
-        e.Gui.addButton('1', 'Continue')
+        e.addSceneButton('1', 'Continue')
     }
 
     // update time if page doesn't explicitly say not to

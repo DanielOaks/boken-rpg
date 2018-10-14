@@ -146,6 +146,8 @@ export function setup(e) {
     e.currentMapCanvasElement = null
 
     imgErrorPattern = createPinstripeCanvas('#abaad4', '#942445', 11)
+
+    e.mapSceneButtons = {}
 }
 
 function generateMap(e, regionName, place) {
