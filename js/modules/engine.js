@@ -61,8 +61,8 @@ export class GameEngine {
     }
 
     // here be convenience functions
-    wipeSceneButtons() {
-        this.sceneButtons = {}
+    wipeMapSceneButtons() {
+        this.mapSceneButtons = {}
     }
 
     advanceTime(details) {

@@ -68,7 +68,7 @@ export function setup(e) {
 
         // kill all existing buttons
         e.Gui.wipeControlButtons()
-        e.wipeSceneButtons()
+        e.wipeMapSceneButtons()
 
         for (const [name, info] of Object.entries(waitingTimes)) {
             e.Gui.addButton(name, info.name, info.name, info.description)

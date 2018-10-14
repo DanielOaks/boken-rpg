@@ -15,7 +15,7 @@ export function setup(e) {
         }
 
         var pressedBtn = event.substr(4)
-        var sceneToLoad = e.sceneButtons[pressedBtn]
+        var sceneToLoad = e.mapSceneButtons[pressedBtn]
         if (sceneToLoad === undefined) {
             return false
         }
@@ -59,7 +59,7 @@ export function setup(e) {
         if (scene.pages.length <= currentScenePage) {
             // wipe buttons in preparation for map start
             e.Gui.wipeControlButtons()
-            e.wipeSceneButtons()
+            e.wipeMapSceneButtons()
 
             // if the scene has a specific place to move on exit, do that
             if (scene.exitRegion) {
@@ -81,13 +81,13 @@ export function setup(e) {
     e.Events.addAllButtonHandler(sceneStartHandler)
     e.Events.addAllButtonHandler(sceneHandler)
 
-    e.sceneButtons = {}
+    e.mapSceneButtons = {}
 }
 
 function processPage(e, scene, pageNumber) {
     // wipe existing buttons
     e.Gui.wipeControlButtons()
-    e.wipeSceneButtons()
+    e.wipeMapSceneButtons()
 
     // get existing time for comparison later
     const oldTime = Math.floor(e.getCurrentTime().totalMinutes)

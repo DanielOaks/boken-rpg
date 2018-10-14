@@ -100,7 +100,7 @@ export function setup(e) {
 
         // kill all existing buttons
         e.Gui.wipeControlButtons()
-        e.wipeSceneButtons()
+        e.wipeMapSceneButtons()
 
         // load movement buttons
         for (const [direction, handler] of Object.entries(place.links)) {
@@ -119,7 +119,7 @@ export function setup(e) {
                 const btn = e.Gui.nextFreeControlButton()
                 // console.log('adding scene button', scene.scene, 'as button', btn)
                 e.Gui.addButton(btn, scene.name, scene.name, scene.description)
-                e.sceneButtons[btn] = scene.scene
+                e.mapSceneButtons[btn] = scene.scene
             }
         }
 
