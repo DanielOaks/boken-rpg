@@ -61,6 +61,11 @@ export function setup(e) {
             e.Gui.wipeControlButtons()
             e.wipeSceneButtons()
 
+            // if the scene has a specific place to move on exit, do that
+            if (scene.exitRegion) {
+                e.enterNewRegion(scene.exitRegion, scene.exitPlace)
+            }
+
             // scene is finished, return to map
             //TODO(dan): maybe save existing state and restore to it instead of just going to map?
             e.state = 'map'

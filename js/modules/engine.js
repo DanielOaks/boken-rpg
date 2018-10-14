@@ -32,7 +32,7 @@ export class GameEngine {
      * @param {string} [place] - Specific place to enter.
      */
     enterNewRegion(region, place) {
-        if (place === null) {
+        if (place === null || place === undefined) {
             place = ''
         }
         this.enteringRegion = true
